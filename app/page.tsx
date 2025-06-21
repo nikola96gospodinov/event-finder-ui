@@ -78,7 +78,7 @@ export default function LandingPage() {
       {/* How It Works Section */}
       <section className="py-20 px-4 bg-white/40">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-purple-900 mb-4">
               How It Works
             </h2>
@@ -150,7 +150,7 @@ export default function LandingPage() {
       {/* Features Section */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-purple-900 mb-4">
               Why Choose EventFinder?
             </h2>
