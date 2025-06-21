@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,7 +15,19 @@ import { Label } from "@/components/ui/label";
 import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 
 export const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get("mode") || "login";
+
+  useEffect(() => {
+    if (!searchParams.get("mode")) {
+      const params = new URLSearchParams(searchParams);
+      params.set("mode", "login");
+      replace(`${pathname}?${params.toString()}`);
+    }
+  }, [pathname, replace, searchParams]);
+
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -31,16 +44,16 @@ export const AuthForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log(`${isLogin ? "Login" : "Register"} attempt:`, formData);
+    console.log(`${mode} attempt:`, formData);
     alert(
-      `${
-        isLogin ? "Login" : "Register"
-      } functionality would be implemented here!`
+      `${mode ? "Login" : "Register"} functionality would be implemented here!`
     );
   };
 
   const toggleMode = () => {
-    setIsLogin(!isLogin);
+    const params = new URLSearchParams(searchParams);
+    params.set("mode", mode === "register" ? "login" : "register");
+    replace(`${pathname}?${params.toString()}`);
     setFormData({
       email: "",
       password: "",
@@ -54,11 +67,11 @@ export const AuthForm = () => {
           <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
             <CardTitle className="text-3xl font-bold flex items-center justify-center gap-3">
               <Sparkles className="h-6 w-6" />
-              {isLogin ? "Welcome Back" : "Join Us"}
+              {mode === "login" ? "Welcome Back" : "Join Us"}
               <Sparkles className="h-6 w-6" />
             </CardTitle>
             <CardDescription className="text-purple-100 text-base">
-              {isLogin
+              {mode === "login"
                 ? "Sign in to your account to continue"
                 : "Create your account to get started"}
             </CardDescription>
@@ -125,21 +138,21 @@ export const AuthForm = () => {
                 type="submit"
                 className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg"
               >
-                {isLogin ? "Sign In" : "Create Account"}
+                {mode === "login" ? "Sign In" : "Create Account"}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </form>
 
             <div className="mt-6 pt-6 border-t border-purple-200">
               <p className="text-center text-purple-600">
-                {isLogin
+                {mode === "login"
                   ? "Don't have an account?"
                   : "Already have an account?"}
                 <button
                   onClick={toggleMode}
                   className="ml-2 text-purple-800 font-semibold hover:text-purple-600 underline transition-colors"
                 >
-                  {isLogin ? "Sign up" : "Sign in"}
+                  {mode === "login" ? "Sign up" : "Sign in"}
                 </button>
               </p>
             </div>

@@ -62,7 +62,7 @@ export default function LandingPage() {
             listings.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/auth">
+            <Link href="/auth?mode=register">
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-lg px-8 py-4"
@@ -225,7 +225,7 @@ export default function LandingPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="text-center pb-8">
-              <Link href="/auth">
+              <Link href="/auth?mode=register">
                 <Button
                   size="lg"
                   className="bg-white text-purple-600 hover:bg-purple-50 text-lg px-8 py-4 font-semibold"
