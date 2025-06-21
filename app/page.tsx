@@ -213,7 +213,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4">
+      <section className="pb-20 pt-10 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <Card className="shadow-2xl border-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
             <CardHeader className="text-center">
@@ -242,12 +242,12 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-purple-900 text-white py-8 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="flex items-center justify-center gap-3 mb-2">
             <Sparkles className="h-6 w-6 text-purple-300" />
             <span className="text-xl font-bold">EventFinder</span>
             <Sparkles className="h-6 w-6 text-purple-300" />
           </div>
-          <p className="text-purple-200 mb-4">
+          <p className="text-purple-200">
             Making event discovery personal, intelligent, and effortless.
           </p>
         </div>
