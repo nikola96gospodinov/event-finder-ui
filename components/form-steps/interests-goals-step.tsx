@@ -73,49 +73,14 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
       </div>
 
       <div className="space-y-8">
-        <div className="bg-gradient-to-br from-green-50 to-blue-50 p-6 rounded-xl border border-green-200">
-          <Label className="text-lg font-semibold text-green-700 mb-4 block">
-            ✨ Interests
-          </Label>
-          <div className="flex gap-2 mb-4">
-            <Input
-              value={tempInputs.interest}
-              onChange={(e) =>
-                setTempInputs((prev) => ({
-                  ...prev,
-                  interest: e.target.value,
-                }))
-              }
-              placeholder="Enter an interest (e.g., Photography, Hiking)"
-              onKeyPress={(e) => e.key === "Enter" && addInterest()}
-              className="border-2 border-green-200 focus:border-green-500"
-            />
-            <Button
-              onClick={addInterest}
-              variant="outline"
-              className="border-green-300 text-green-700 hover:bg-green-100"
-            >
-              Add ✨
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {formData.interests.map((interest, index) => (
-              <Badge
-                key={index}
-                variant="secondary"
-                className="cursor-pointer bg-green-100 text-green-700 hover:bg-green-200 transition-all duration-200 hover:scale-105"
-                onClick={() => removeInterest(index)}
-              >
-                {interest} ×
-              </Badge>
-            ))}
-          </div>
-        </div>
-
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
-          <Label className="text-lg font-semibold text-blue-700 mb-4 block">
+          <Label className="text-lg font-semibold text-blue-700 mb-1 block">
             🎯 Goals
           </Label>
+          <p className="text-sm text-muted-foreground mb-4">
+            e.g. learn Spanish, make new friends, find a business partner, date
+            around
+          </p>
           <div className="flex gap-2 mb-4">
             <Input
               value={tempInputs.goal}
@@ -125,7 +90,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
                   goal: e.target.value,
                 }))
               }
-              placeholder="Enter a goal (e.g., Learn Spanish, Get fit)"
+              placeholder="Enter a goal"
               onKeyPress={(e) => e.key === "Enter" && addGoal()}
               className="border-2 border-blue-200 focus:border-blue-500"
             />
@@ -146,6 +111,48 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
                 onClick={() => removeGoal(index)}
               >
                 {goal} ×
+              </Badge>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-green-50 to-blue-50 p-6 rounded-xl border border-green-200">
+          <Label className="text-lg font-semibold text-green-700 mb-1 block">
+            ✨ Interests
+          </Label>
+          <p className="text-sm text-muted-foreground mb-4">
+            e.g. photography, hiking, Formula 1, coffee, board games
+          </p>
+          <div className="flex gap-2 mb-4">
+            <Input
+              value={tempInputs.interest}
+              onChange={(e) =>
+                setTempInputs((prev) => ({
+                  ...prev,
+                  interest: e.target.value,
+                }))
+              }
+              placeholder="Enter an interest"
+              onKeyPress={(e) => e.key === "Enter" && addInterest()}
+              className="border-2 border-green-200 focus:border-green-500"
+            />
+            <Button
+              onClick={addInterest}
+              variant="outline"
+              className="border-green-300 text-green-700 hover:bg-green-100"
+            >
+              Add ✨
+            </Button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {formData.interests.map((interest, index) => (
+              <Badge
+                key={index}
+                variant="secondary"
+                className="cursor-pointer bg-green-100 text-green-700 hover:bg-green-200 transition-all duration-200 hover:scale-105"
+                onClick={() => removeInterest(index)}
+              >
+                {interest} ×
               </Badge>
             ))}
           </div>

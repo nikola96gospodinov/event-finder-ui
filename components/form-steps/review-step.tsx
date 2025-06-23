@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Star } from "lucide-react";
+import { Calendar, Star, Clock, Heart, Users } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
 interface ReviewStepProps {
@@ -37,53 +37,130 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
           <Star className="h-6 w-6" />
           Profile Summary
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-          <div className="space-y-3">
-            <p className="flex items-center gap-2">
-              <span className="font-semibold text-rose-600">📧 Email:</span>
-              <span className="text-gray-700">{formData.email}</span>
-            </p>
-            <p className="flex items-center gap-2">
-              <span className="font-semibold text-rose-600">🎂 Age:</span>
-              <span className="text-gray-700">{formData.age}</span>
-            </p>
-            <p className="flex items-center gap-2">
-              <span className="font-semibold text-rose-600">
-                💼 Occupation:
-              </span>
-              <span className="text-gray-700">{formData.occupation}</span>
-            </p>
-            <p className="flex items-center gap-2">
-              <span className="font-semibold text-rose-600">📍 Location:</span>
-              <span className="text-gray-700">
-                {formData.location.city}, {formData.location.state},{" "}
-                {formData.location.country}
-              </span>
-            </p>
-          </div>
-          <div className="space-y-3">
-            <p className="flex items-center gap-2">
-              <span className="font-semibold text-pink-600">💰 Budget:</span>
-              <span className="text-gray-700">
-                {formData.willingness_to_pay ? `$${formData.budget}` : "Free"}
-              </span>
-            </p>
-            <p className="flex items-center gap-2">
-              <span className="font-semibold text-pink-600">💻 Online:</span>
-              <span className="text-gray-700">
-                {formData.willingness_for_online ? "Yes" : "No"}
-              </span>
-            </p>
-            <p className="flex items-center gap-2">
-              <span className="font-semibold text-pink-600">⏰ Time:</span>
-              <span className="text-gray-700">
-                {formData.time_commitment_in_minutes} minutes
-              </span>
-            </p>
+
+        {/* Personal Information */}
+        <div className="mb-6">
+          <h4 className="text-lg font-semibold text-rose-600 mb-3 flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            Personal Information
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="space-y-2">
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-rose-600">🎂 Age:</span>
+                <span className="text-gray-700">{formData.birthday}</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-rose-600">
+                  💼 Occupation:
+                </span>
+                <span className="text-gray-700">{formData.occupation}</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-rose-600">👤 Gender:</span>
+                <span className="text-gray-700 capitalize">
+                  {formData.gender.replace("-", " ")}
+                </span>
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-pink-600">
+                  💕 Sexual Orientation:
+                </span>
+                <span className="text-gray-700 capitalize">
+                  {formData.sexual_orientation.replace("-", " ")}
+                </span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-pink-600">
+                  💍 Relationship Status:
+                </span>
+                <span className="text-gray-700 capitalize">
+                  {formData.relationship_status.replace("-", " ")}
+                </span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-pink-600">
+                  📍 Postcode:
+                </span>
+                <span className="text-gray-700">{formData.postcode}</span>
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="mt-6 space-y-4">
+        {/* Preferences */}
+        <div className="mb-6">
+          <h4 className="text-lg font-semibold text-rose-600 mb-3 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Preferences
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="space-y-2">
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-rose-600">💰 Budget:</span>
+                <span className="text-gray-700">
+                  {formData.willingness_to_pay ? `£${formData.budget}` : "Free"}
+                </span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-rose-600">💻 Online:</span>
+                <span className="text-gray-700">
+                  {formData.willingness_for_online ? "Yes" : "No"}
+                </span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-rose-600">
+                  ⏰ Time Commitment:
+                </span>
+                <span className="text-gray-700">
+                  {formData.time_commitment_in_minutes} minutes
+                </span>
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="flex items-center gap-2">
+                <span className="font-semibold text-pink-600">
+                  🗺️ Distance:
+                </span>
+                <span className="text-gray-700">
+                  {formData.distance_threshold.value}{" "}
+                  {formData.distance_threshold.unit}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Availability */}
+        <div className="mb-6">
+          <h4 className="text-lg font-semibold text-rose-600 mb-3 flex items-center gap-2">
+            <Clock className="h-5 w-5" />
+            Availability
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <p className="font-semibold text-rose-600 mb-2">📅 Weekdays:</p>
+              <p className="text-gray-700">
+                {formData.acceptable_times.weekdays.allDay
+                  ? "Available at all times"
+                  : `${formData.acceptable_times.weekdays.startTime} - ${formData.acceptable_times.weekdays.endTime}`}
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-pink-600 mb-2">🌅 Weekends:</p>
+              <p className="text-gray-700">
+                {formData.acceptable_times.weekends.allDay
+                  ? "Available at all times"
+                  : `${formData.acceptable_times.weekends.startTime} - ${formData.acceptable_times.weekends.endTime}`}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Interests and Goals */}
+        <div className="space-y-4">
           <div>
             <p className="font-semibold text-rose-600 mb-2">✨ Interests:</p>
             <div className="flex flex-wrap gap-2">
@@ -116,18 +193,11 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         </div>
       </div>
 
-      <div className="bg-gray-900 text-green-400 p-6 rounded-xl font-mono text-sm overflow-auto border-2 border-gray-700">
-        <div className="mb-2 text-green-300">💻 JSON Output Preview:</div>
-        <pre className="whitespace-pre-wrap">
-          {JSON.stringify(formData, null, 2)}
-        </pre>
-      </div>
-
       <Button
         onClick={onSubmit}
         className="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
       >
-        🚀 Submit My Awesome Profile
+        🚀 Save My Profile
       </Button>
     </div>
   );

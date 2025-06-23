@@ -27,8 +27,7 @@ export const UserProfileForm = () => {
     interests: [],
     goals: [],
     occupation: "",
-    email: "",
-    age: 0,
+    birthday: "",
     gender: "prefer-not-to-say",
     sexual_orientation: "prefer-not-to-say",
     relationship_status: "prefer-not-to-say",
@@ -36,23 +35,21 @@ export const UserProfileForm = () => {
     budget: 0,
     willingness_for_online: false,
     acceptable_times: {
-      monday: [],
-      tuesday: [],
-      wednesday: [],
-      thursday: [],
-      friday: [],
-      saturday: [],
-      sunday: [],
+      weekdays: {
+        startTime: "",
+        endTime: "",
+      },
+      weekends: {
+        startTime: "",
+        endTime: "",
+      },
     },
-    location: {
-      city: "",
-      state: "",
-      country: "",
-      zipcode: "",
+    postcode: "",
+    distance_threshold: {
+      value: 20,
+      unit: "miles",
     },
-    distance_threshold: 10,
     time_commitment_in_minutes: 60,
-    timeframe: "flexible",
   });
 
   const [tempInputs, setTempInputs] = useState({
@@ -76,9 +73,9 @@ export const UserProfileForm = () => {
   };
 
   const handleSubmit = () => {
-    console.log("User Profile Data (Python Dict Format):");
+    console.log("User Profile Data:");
     console.log(JSON.stringify(formData, null, 2));
-    alert("Profile submitted! Check the console for the Python dict format.");
+    alert("Profile submitted! ");
   };
 
   const renderStep = () => {
@@ -121,14 +118,14 @@ export const UserProfileForm = () => {
               Profile Builder
               <Sparkles className="h-8 w-8" />
             </CardTitle>
-            <CardDescription className="text-purple-100 text-lg">
-              Create your personalized profile in just a few steps
+            <CardDescription className="text-purple-50 text-lg font-semibold">
+              The more we know about you the more accurate recommendations we
+              can make.
             </CardDescription>
             <div className="mt-6">
               <Progress value={progress} className="w-full h-3 bg-white/20" />
-              <p className="text-sm text-purple-100 mt-3 font-semibold">
-                Step {currentStep + 1} of {totalSteps} • {Math.round(progress)}%
-                Complete
+              <p className="text-sm text-purple-50 mt-3 font-semibold">
+                Step {currentStep + 1} of {totalSteps} Complete
               </p>
             </div>
           </CardHeader>

@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { User, Sparkles, Star, Zap } from "lucide-react";
+import { User, Star, Zap } from "lucide-react";
 import {
   UserProfile,
   GenderBiasOptions,
@@ -47,40 +47,20 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2 group">
           <Label
-            htmlFor="email"
-            className="text-sm font-medium flex items-center gap-2"
-          >
-            <Sparkles className="h-4 w-4 text-purple-500" />
-            Email
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, email: e.target.value }))
-            }
-            placeholder="your@email.com"
-            className="border-2 border-purple-200 focus:border-purple-500 transition-all duration-300 hover:border-purple-300"
-          />
-        </div>
-
-        <div className="space-y-2 group">
-          <Label
             htmlFor="age"
             className="text-sm font-medium flex items-center gap-2"
           >
             <Star className="h-4 w-4 text-pink-500" />
-            Age
+            Birthday
           </Label>
           <Input
             id="age"
-            type="number"
-            value={formData.age || ""}
+            type="date"
+            value={formData.birthday || ""}
             onChange={(e) =>
               setFormData((prev) => ({
                 ...prev,
-                age: parseInt(e.target.value) || 0,
+                birthday: e.target.value,
               }))
             }
             placeholder="25"
@@ -105,7 +85,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
                 occupation: e.target.value,
               }))
             }
-            placeholder="Software Developer"
+            placeholder="Software Engineer"
             className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-300"
           />
         </div>

@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MapPin } from "lucide-react";
-import { UserProfile, DistanceThreshold } from "@/types/user-profile";
+import { UserProfile } from "@/types/user-profile";
 
 interface LocationStepProps {
   formData: UserProfile;
@@ -41,84 +41,21 @@ export const LocationStep: React.FC<LocationStepProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label
-              htmlFor="city"
+              htmlFor="postcode"
               className="text-sm font-medium flex items-center gap-2"
             >
-              🏙️ City
+              📮 Postcode
             </Label>
             <Input
-              id="city"
-              value={formData.location.city}
+              id="postcode"
+              value={formData.postcode}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  location: { ...prev.location, city: e.target.value },
+                  postcode: e.target.value,
                 }))
               }
-              placeholder="New York"
-              className="border-2 border-orange-200 focus:border-orange-500"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label
-              htmlFor="state"
-              className="text-sm font-medium flex items-center gap-2"
-            >
-              🗺️ State
-            </Label>
-            <Input
-              id="state"
-              value={formData.location.state}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  location: { ...prev.location, state: e.target.value },
-                }))
-              }
-              placeholder="NY"
-              className="border-2 border-orange-200 focus:border-orange-500"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label
-              htmlFor="country"
-              className="text-sm font-medium flex items-center gap-2"
-            >
-              🌎 Country
-            </Label>
-            <Input
-              id="country"
-              value={formData.location.country}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  location: { ...prev.location, country: e.target.value },
-                }))
-              }
-              placeholder="USA"
-              className="border-2 border-red-200 focus:border-red-500"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label
-              htmlFor="zipcode"
-              className="text-sm font-medium flex items-center gap-2"
-            >
-              📮 Zip Code
-            </Label>
-            <Input
-              id="zipcode"
-              value={formData.location.zipcode}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  location: { ...prev.location, zipcode: e.target.value },
-                }))
-              }
-              placeholder="10001"
+              placeholder="EC1A 1BB"
               className="border-2 border-red-200 focus:border-red-500"
             />
           </div>
@@ -126,30 +63,54 @@ export const LocationStep: React.FC<LocationStepProps> = ({
       </div>
 
       <div className="bg-white p-6 rounded-xl border-2 border-orange-200">
-        <Label className="text-lg font-semibold text-orange-700 mb-4 block">
-          📍 Distance Threshold
-        </Label>
-        <Select
-          value={formData.distance_threshold.toString()}
-          onValueChange={(value) =>
-            setFormData((prev) => ({
-              ...prev,
-              distance_threshold: parseInt(value) as DistanceThreshold,
-            }))
-          }
-        >
-          <SelectTrigger className="border-2 border-orange-200 focus:border-orange-500">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="1">1 mile 🚶</SelectItem>
-            <SelectItem value="5">5 miles 🚴</SelectItem>
-            <SelectItem value="10">10 miles 🚗</SelectItem>
-            <SelectItem value="25">25 miles 🛣️</SelectItem>
-            <SelectItem value="50">50 miles ✈️</SelectItem>
-            <SelectItem value="100">100 miles 🌟</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <Label className="text-sm font-medium flex items-center gap-2">
+              🏠 Distance Threshold
+            </Label>
+
+            <Input
+              className="border-2 border-orange-200 focus:border-orange-500"
+              type="number"
+              value={formData.distance_threshold.value}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  distance_threshold: {
+                    ...prev.distance_threshold,
+                    value: parseInt(e.target.value),
+                  },
+                }))
+              }
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-sm font-medium flex items-center gap-2">
+              🛣️ Units of Distance
+            </Label>
+            <Select
+              value={formData.distance_threshold.unit}
+              onValueChange={(value: "km" | "miles") =>
+                setFormData((prev) => ({
+                  ...prev,
+                  distance_threshold: {
+                    ...prev.distance_threshold,
+                    unit: value,
+                  },
+                }))
+              }
+            >
+              <SelectTrigger className="border-2 border-orange-200 focus:border-orange-500">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="miles">Miles</SelectItem>
+                <SelectItem value="km">Kilometres</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
     </div>
   );

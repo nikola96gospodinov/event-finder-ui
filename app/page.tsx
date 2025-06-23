@@ -186,7 +186,7 @@ export default function LandingPage() {
             </div>
 
             <div className="text-center">
-              <div className="w-12 h-12 bg-purple-400 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-fuchsia-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="h-6 w-6 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-purple-900 mb-2">
