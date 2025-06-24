@@ -2,15 +2,7 @@
 
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { InputField, SelectField } from "@/components/ui/form-inputs";
 import { MapPin } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
@@ -21,6 +13,11 @@ interface LocationStepProps {
 export const LocationStep: React.FC<LocationStepProps> = ({ form }) => {
   const { register, setValue, watch } = form;
   const formData = watch();
+
+  const distanceUnitOptions = [
+    { value: "miles", label: "Miles" },
+    { value: "km", label: "Kilometres" },
+  ];
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -39,60 +36,39 @@ export const LocationStep: React.FC<LocationStepProps> = ({ form }) => {
 
       <div className="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl border border-orange-200">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label
-              htmlFor="postcode"
-              className="text-sm font-medium flex items-center gap-2"
-            >
-              📮 Postcode
-            </Label>
-            <Input
-              id="postcode"
-              {...register("postcode")}
-              placeholder="EC1A 1BB"
-              className="border-2 border-red-200 focus:border-red-500"
-            />
-          </div>
+          <InputField
+            label="📮 Postcode"
+            {...register("postcode")}
+            placeholder="EC1A 1BB"
+            className="border-2 border-red-200 focus:border-red-500"
+            labelClassName="text-sm font-medium flex items-center gap-2"
+          />
         </div>
       </div>
 
       <div className="bg-white p-6 rounded-xl border-2 border-orange-200">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label className="text-sm font-medium flex items-center gap-2">
-              🏠 Distance Threshold
-            </Label>
+          <InputField
+            label="🏠 Distance Threshold"
+            type="number"
+            value={formData.distance_threshold?.value}
+            onChange={(e) =>
+              setValue("distance_threshold.value", parseInt(e.target.value))
+            }
+            min={0}
+            className="border-2 border-orange-200 focus:border-orange-500"
+            labelClassName="text-sm font-medium flex items-center gap-2"
+          />
 
-            <Input
-              className="border-2 border-orange-200 focus:border-orange-500"
-              type="number"
-              value={formData.distance_threshold?.value}
-              onChange={(e) =>
-                setValue("distance_threshold.value", parseInt(e.target.value))
-              }
-              min={0}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-sm font-medium flex items-center gap-2">
-              🛣️ Units of Distance
-            </Label>
-            <Select
-              value={formData.distance_threshold?.unit}
-              onValueChange={(value: "km" | "miles") =>
-                setValue("distance_threshold.unit", value)
-              }
-            >
-              <SelectTrigger className="border-2 border-orange-200 focus:border-orange-500">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="miles">Miles</SelectItem>
-                <SelectItem value="km">Kilometres</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <SelectField
+            label="🛣️ Units of Distance"
+            options={distanceUnitOptions}
+            value={formData.distance_threshold?.unit}
+            onValueChange={(value: string) =>
+              setValue("distance_threshold.unit", value as "km" | "miles")
+            }
+            triggerClassName="border-2 border-orange-200 focus:border-orange-500"
+          />
         </div>
       </div>
     </div>

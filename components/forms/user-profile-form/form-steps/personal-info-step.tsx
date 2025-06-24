@@ -2,16 +2,8 @@
 
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { User, Star, Zap } from "lucide-react";
+import { InputField, SelectField } from "@/components/ui/form-inputs";
+import { User } from "lucide-react";
 import {
   UserProfile,
   GenderBiasOptions,
@@ -26,6 +18,32 @@ interface PersonalInfoStepProps {
 export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ form }) => {
   const { register, setValue, watch } = form;
   const formData = watch();
+
+  const genderOptions = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "non-binary", label: "Non-binary" },
+    { value: "other", label: "Other" },
+  ];
+
+  const sexualOrientationOptions = [
+    { value: "straight", label: "Straight" },
+    { value: "lesbian", label: "Lesbian" },
+    { value: "gay", label: "Gay" },
+    { value: "bisexual", label: "Bisexual" },
+    { value: "pansexual", label: "Pansexual" },
+    { value: "other", label: "Other" },
+  ];
+
+  const relationshipStatusOptions = [
+    { value: "single", label: "Single" },
+    { value: "in-relationship", label: "In Relationship" },
+    { value: "married", label: "Married" },
+    { value: "divorced", label: "Divorced" },
+    { value: "widowed", label: "Widowed" },
+    { value: "polyamorous", label: "Polyamorous" },
+    { value: "other", label: "Other" },
+  ];
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -45,103 +63,57 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ form }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2 group">
-          <Label
-            htmlFor="birthday"
-            className="text-sm font-medium flex items-center gap-2"
-          >
-            <Star className="h-4 w-4 text-pink-500" />
-            Birthday
-          </Label>
-          <Input
-            id="birthday"
-            type="date"
-            {...register("birthday")}
-            placeholder="25"
-            className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
-          />
-        </div>
+        <InputField
+          label="Birthday"
+          type="date"
+          {...register("birthday")}
+          className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
+          labelClassName="text-sm font-medium flex items-center gap-2"
+        />
 
-        <div className="space-y-2 group">
-          <Label
-            htmlFor="occupation"
-            className="text-sm font-medium flex items-center gap-2"
-          >
-            <Zap className="h-4 w-4 text-indigo-500" />
-            Occupation
-          </Label>
-          <Input
-            id="occupation"
-            {...register("occupation")}
-            placeholder="Software Engineer"
-            className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-300"
-          />
-        </div>
+        <InputField
+          label="Occupation"
+          {...register("occupation")}
+          placeholder="Software Engineer"
+          className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-300"
+          labelClassName="text-sm font-medium flex items-center gap-2"
+        />
 
-        <div className="space-y-2">
-          <Label className="text-sm font-medium">Gender</Label>
-          <Select
-            value={formData.gender}
-            onValueChange={(value: GenderBiasOptions) =>
-              setValue("gender", value)
-            }
-          >
-            <SelectTrigger className="border-2 border-purple-200 focus:border-purple-500 transition-all duration-300">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="male">Male</SelectItem>
-              <SelectItem value="female">Female</SelectItem>
-              <SelectItem value="non-binary">Non-binary</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <SelectField
+          label="Gender"
+          options={genderOptions}
+          value={formData.gender}
+          onValueChange={(value: string) =>
+            setValue("gender", value as GenderBiasOptions)
+          }
+          triggerClassName="border-2 border-purple-200 focus:border-purple-500 transition-all duration-300"
+        />
 
-        <div className="space-y-2">
-          <Label className="text-sm font-medium">Sexual Orientation</Label>
-          <Select
-            value={formData.sexual_orientation}
-            onValueChange={(value: SexualOrientationBiasOptions) =>
-              setValue("sexual_orientation", value)
-            }
-          >
-            <SelectTrigger className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="straight">Straight</SelectItem>
-              <SelectItem value="lesbian">Lesbian</SelectItem>
-              <SelectItem value="gay">Gay</SelectItem>
-              <SelectItem value="bisexual">Bisexual</SelectItem>
-              <SelectItem value="pansexual">Pansexual</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <SelectField
+          label="Sexual Orientation"
+          options={sexualOrientationOptions}
+          value={formData.sexual_orientation}
+          onValueChange={(value: string) =>
+            setValue(
+              "sexual_orientation",
+              value as SexualOrientationBiasOptions
+            )
+          }
+          triggerClassName="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300"
+        />
 
-        <div className="space-y-2">
-          <Label className="text-sm font-medium">Relationship Status</Label>
-          <Select
-            value={formData.relationship_status}
-            onValueChange={(value: RelationshipStatusBiasOptions) =>
-              setValue("relationship_status", value)
-            }
-          >
-            <SelectTrigger className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="single">Single</SelectItem>
-              <SelectItem value="in-relationship">In Relationship</SelectItem>
-              <SelectItem value="married">Married</SelectItem>
-              <SelectItem value="divorced">Divorced</SelectItem>
-              <SelectItem value="widowed">Widowed</SelectItem>
-              <SelectItem value="polyamorous">Polyamorous</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <SelectField
+          label="Relationship Status"
+          options={relationshipStatusOptions}
+          value={formData.relationship_status}
+          onValueChange={(value: string) =>
+            setValue(
+              "relationship_status",
+              value as RelationshipStatusBiasOptions
+            )
+          }
+          triggerClassName="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300"
+        />
       </div>
     </div>
   );

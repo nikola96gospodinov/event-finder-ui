@@ -2,15 +2,7 @@
 
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectField, CheckboxField } from "@/components/ui/form-inputs";
 import { DollarSign } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
@@ -21,6 +13,17 @@ interface BudgetStepProps {
 export const BudgetStep: React.FC<BudgetStepProps> = ({ form }) => {
   const { setValue, watch } = form;
   const formData = watch();
+
+  const budgetOptions = [
+    { value: "0", label: "Free events only ($0) 🆓" },
+    { value: "10", label: "Up to $10 per event 💵" },
+    { value: "20", label: "Up to $20 per event 🌱" },
+    { value: "50", label: "Up to $50 per event ⭐" },
+    { value: "100", label: "Up to $100 per event 💎" },
+    { value: "200", label: "Up to $200 per event 🏆" },
+    { value: "500", label: "Up to $500 per event 👑" },
+    { value: "1000", label: "Premium events ($1000+) 🌟" },
+  ];
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -41,49 +44,29 @@ export const BudgetStep: React.FC<BudgetStepProps> = ({ form }) => {
 
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border border-emerald-200">
-          <Label className="text-lg font-semibold text-emerald-700 mb-4 block">
-            💰 Do you have a budget in mind for events?
-          </Label>
-          <Select
+          <SelectField
+            label="💰 Do you have a budget in mind for events?"
+            options={budgetOptions}
             value={formData?.budget?.toString()}
             onValueChange={(value) => {
               const budgetValue = parseInt(value);
               setValue("budget", budgetValue);
             }}
-          >
-            <SelectTrigger className="border-2 border-emerald-200 focus:border-emerald-500">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="0">Free events only ($0) 🆓</SelectItem>
-              <SelectItem value="10">Up to $10 per event 💵</SelectItem>
-              <SelectItem value="20">Up to $20 per event 🌱</SelectItem>
-              <SelectItem value="50">Up to $50 per event ⭐</SelectItem>
-              <SelectItem value="100">Up to $100 per event 💎</SelectItem>
-              <SelectItem value="200">Up to $200 per event 🏆</SelectItem>
-              <SelectItem value="500">Up to $500 per event 👑</SelectItem>
-              <SelectItem value="1000">Premium events ($1000+) 🌟</SelectItem>
-            </SelectContent>
-          </Select>
+            triggerClassName="border-2 border-emerald-200 focus:border-emerald-500"
+            labelClassName="text-lg font-semibold text-emerald-700 mb-4 block"
+          />
         </div>
 
         <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-200">
-          <div className="flex items-center space-x-3">
-            <Checkbox
-              id="willingness_for_online"
-              checked={formData.willingness_for_online ?? false}
-              onCheckedChange={(checked) =>
-                setValue("willingness_for_online", !!checked)
-              }
-              className="border-2 border-teal-300"
-            />
-            <Label
-              htmlFor="willingness_for_online"
-              className="text-lg font-medium text-teal-700"
-            >
-              💻 I&apos;m open to attending virtual/online events
-            </Label>
-          </div>
+          <CheckboxField
+            label="💻 I'm open to attending virtual/online events"
+            checked={formData.willingness_for_online ?? false}
+            onCheckedChange={(checked) =>
+              setValue("willingness_for_online", !!checked)
+            }
+            checkboxClassName="border-2 border-teal-300"
+            labelClassName="text-lg font-medium text-teal-700"
+          />
         </div>
       </div>
     </div>

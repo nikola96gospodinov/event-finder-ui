@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-export interface InputFieldProps extends React.ComponentProps<typeof Input> {
+export type TextareaFieldProps = React.ComponentProps<"textarea"> & {
   label?: string;
   error?: string;
   required?: boolean;
@@ -11,9 +10,9 @@ export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   labelClassName?: string;
   errorClassName?: string;
   helperTextClassName?: string;
-}
+};
 
-const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
+const TextareaField = React.forwardRef<HTMLTextAreaElement, TextareaFieldProps>(
   (
     {
       label,
@@ -30,13 +29,13 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
     ref
   ) => {
     const generatedId = React.useId();
-    const inputId = id || generatedId;
+    const textareaId = id || generatedId;
 
     return (
       <div className="space-y-2">
         {label && (
           <Label
-            htmlFor={inputId}
+            htmlFor={textareaId}
             className={cn(
               "text-sm font-medium text-foreground",
               labelClassName
@@ -46,26 +45,27 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
             {required && <span className="text-destructive ml-1">*</span>}
           </Label>
         )}
-        <Input
+        <textarea
           ref={ref}
-          id={inputId}
+          id={textareaId}
           className={cn(
+            "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
             error && "border-destructive focus-visible:ring-destructive",
             className
           )}
           aria-invalid={error ? "true" : "false"}
           aria-describedby={
             error
-              ? `${inputId}-error`
+              ? `${textareaId}-error`
               : helperText
-              ? `${inputId}-helper`
+              ? `${textareaId}-helper`
               : undefined
           }
           {...props}
         />
         {error && (
           <p
-            id={`${inputId}-error`}
+            id={`${textareaId}-error`}
             className={cn("text-sm text-destructive", errorClassName)}
           >
             {error}
@@ -73,7 +73,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
         )}
         {helperText && !error && (
           <p
-            id={`${inputId}-helper`}
+            id={`${textareaId}-helper`}
             className={cn("text-sm text-muted-foreground", helperTextClassName)}
           >
             {helperText}
@@ -84,6 +84,6 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
   }
 );
 
-InputField.displayName = "InputField";
+TextareaField.displayName = "TextareaField";
 
-export { InputField };
+export { TextareaField };

@@ -3,7 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-export interface CheckboxFieldProps {
+export type CheckboxFieldProps = {
   label?: string;
   error?: string;
   required?: boolean;
@@ -17,7 +17,7 @@ export interface CheckboxFieldProps {
   helperTextClassName?: string;
   checkboxClassName?: string;
   id?: string;
-}
+};
 
 const CheckboxField = React.forwardRef<HTMLButtonElement, CheckboxFieldProps>(
   (

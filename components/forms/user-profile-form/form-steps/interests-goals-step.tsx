@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { InputField } from "@/components/ui/form-inputs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Target } from "lucide-react";
@@ -70,21 +69,26 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
 
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
-          <Label className="text-lg font-semibold text-blue-700 mb-1 block">
-            🎯 Goals
-          </Label>
-          <p className="text-sm text-muted-foreground mb-4">
-            e.g. learn Spanish, make new friends, find a business partner, date
-            around
-          </p>
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-blue-700 mb-1">
+              🎯 Goals
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              e.g. learn Spanish, make new friends, find a business partner,
+              date around
+            </p>
+          </div>
           <div className="flex gap-2 mb-4">
-            <Input
-              value={tempGoal}
-              onChange={(e) => setTempGoal(e.target.value)}
-              placeholder="Enter a goal"
-              onKeyPress={(e) => e.key === "Enter" && addGoal()}
-              className="border-2 border-blue-200 focus:border-blue-500"
-            />
+            <div className="flex-1">
+              <InputField
+                value={tempGoal}
+                onChange={(e) => setTempGoal(e.target.value)}
+                placeholder="Enter a goal"
+                onKeyPress={(e) => e.key === "Enter" && addGoal()}
+                className="border-2 border-blue-200 focus:border-blue-500"
+                label=""
+              />
+            </div>
             <Button
               onClick={addGoal}
               variant="outline"
@@ -108,20 +112,25 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
         </div>
 
         <div className="bg-gradient-to-br from-green-50 to-blue-50 p-6 rounded-xl border border-green-200">
-          <Label className="text-lg font-semibold text-green-700 mb-1 block">
-            ✨ Interests
-          </Label>
-          <p className="text-sm text-muted-foreground mb-4">
-            e.g. photography, hiking, Formula 1, coffee, board games
-          </p>
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-green-700 mb-1">
+              ✨ Interests
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              e.g. photography, hiking, Formula 1, coffee, board games
+            </p>
+          </div>
           <div className="flex gap-2 mb-4">
-            <Input
-              value={tempInterest}
-              onChange={(e) => setTempInterest(e.target.value)}
-              placeholder="Enter an interest"
-              onKeyPress={(e) => e.key === "Enter" && addInterest()}
-              className="border-2 border-green-200 focus:border-green-500"
-            />
+            <div className="flex-1">
+              <InputField
+                value={tempInterest}
+                onChange={(e) => setTempInterest(e.target.value)}
+                placeholder="Enter an interest"
+                onKeyPress={(e) => e.key === "Enter" && addInterest()}
+                className="border-2 border-green-200 focus:border-green-500"
+                label=""
+              />
+            </div>
             <Button
               onClick={addInterest}
               variant="outline"

@@ -9,13 +9,13 @@ import {
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-export interface SelectOption {
+export type SelectOption = {
   value: string;
   label: string;
   disabled?: boolean;
-}
+};
 
-export interface SelectFieldProps {
+export type SelectFieldProps = {
   label?: string;
   error?: string;
   required?: boolean;
@@ -31,7 +31,7 @@ export interface SelectFieldProps {
   helperTextClassName?: string;
   triggerClassName?: string;
   id?: string;
-}
+};
 
 const SelectField = React.forwardRef<HTMLButtonElement, SelectFieldProps>(
   (
