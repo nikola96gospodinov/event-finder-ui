@@ -105,9 +105,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
               <SelectItem value="male">Male</SelectItem>
               <SelectItem value="female">Female</SelectItem>
               <SelectItem value="non-binary">Non-binary</SelectItem>
-              <SelectItem value="prefer-not-to-say">
-                Prefer not to say
-              </SelectItem>
+              <SelectItem value="other">Other</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -127,14 +125,12 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="heterosexual">Heterosexual</SelectItem>
-              <SelectItem value="homosexual">Homosexual</SelectItem>
+              <SelectItem value="straight">Straight</SelectItem>
+              <SelectItem value="lesbian">Lesbian</SelectItem>
+              <SelectItem value="gay">Gay</SelectItem>
               <SelectItem value="bisexual">Bisexual</SelectItem>
               <SelectItem value="pansexual">Pansexual</SelectItem>
-              <SelectItem value="asexual">Asexual</SelectItem>
-              <SelectItem value="prefer-not-to-say">
-                Prefer not to say
-              </SelectItem>
+              <SelectItem value="other">Other</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -159,9 +155,8 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
               <SelectItem value="married">Married</SelectItem>
               <SelectItem value="divorced">Divorced</SelectItem>
               <SelectItem value="widowed">Widowed</SelectItem>
-              <SelectItem value="prefer-not-to-say">
-                Prefer not to say
-              </SelectItem>
+              <SelectItem value="polyamorous">Polyamorous</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
             </SelectContent>
           </Select>
         </div>

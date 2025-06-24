@@ -1,56 +1,86 @@
-export type GenderBiasOptions =
-  | "male"
-  | "female"
-  | "non-binary"
-  | "prefer-not-to-say";
+import { z } from "zod";
 
-export type SexualOrientationBiasOptions =
-  | "heterosexual"
-  | "homosexual"
-  | "bisexual"
-  | "pansexual"
-  | "asexual"
-  | "prefer-not-to-say";
+// Step 1: Personal Information
+export const PersonalInfoSchema = z.object({
+  birthday: z.string(),
+  occupation: z.string(),
+  gender: z.enum(["male", "female", "non-binary", "other"]),
+  sexual_orientation: z.enum([
+    "straight",
+    "lesbian",
+    "gay",
+    "bisexual",
+    "pansexual",
+    "other",
+  ]),
+  relationship_status: z.enum([
+    "single",
+    "in-relationship",
+    "married",
+    "divorced",
+    "widowed",
+    "polyamorous",
+    "other",
+  ]),
+});
+export type PersonalInfo = z.infer<typeof PersonalInfoSchema>;
 
-export type RelationshipStatusBiasOptions =
-  | "single"
-  | "in-relationship"
-  | "married"
-  | "divorced"
-  | "widowed"
-  | "prefer-not-to-say";
+// Step 2: Interests & Goals
+export const InterestsGoalsSchema = z.object({
+  interests: z.array(z.string()),
+  goals: z.array(z.string()),
+});
+export type InterestsGoals = z.infer<typeof InterestsGoalsSchema>;
 
-export type Budget = 0 | 10 | 20 | 50 | 100 | 200 | 500 | 1000;
+// Step 3: Location & Distance
+export const LocationSchema = z.object({
+  postcode: z.string(),
+  distance_threshold: z.object({
+    value: z.number(),
+    unit: z.enum(["km", "miles"]),
+  }),
+});
+export type Location = z.infer<typeof LocationSchema>;
 
-export type DistanceThreshold = {
-  value: number;
-  unit: "km" | "miles";
-};
+// Step 4: Budget & Format
+export const BudgetSchema = z.object({
+  willingness_to_pay: z.boolean(),
+  budget: z
+    .enum(["0", "10", "20", "50", "100", "200", "500", "1000"])
+    .transform(
+      (val) => parseInt(val) as 0 | 10 | 20 | 50 | 100 | 200 | 500 | 1000
+    ),
+  willingness_for_online: z.boolean(),
+});
+export type Budget = z.infer<typeof BudgetSchema>;
 
-export type StartEndTime = {
-  startTime: string;
-  endTime: string;
-  allDay?: boolean;
-};
+// Step 5: Availability & Time
+export const AvailabilitySchema = z.object({
+  time_commitment_in_minutes: z.number(),
+  acceptable_times: z.object({
+    weekdays: z.object({
+      startTime: z.string().optional(),
+      endTime: z.string().optional(),
+      allDay: z.boolean().optional(),
+    }),
+    weekends: z.object({
+      startTime: z.string().optional(),
+      endTime: z.string().optional(),
+      allDay: z.boolean().optional(),
+    }),
+  }),
+});
+export type Availability = z.infer<typeof AvailabilitySchema>;
 
-export type AcceptableTimes = {
-  weekdays: StartEndTime;
-  weekends: StartEndTime;
-};
+export const UserProfileSchema = PersonalInfoSchema.merge(InterestsGoalsSchema)
+  .merge(LocationSchema)
+  .merge(BudgetSchema)
+  .merge(AvailabilitySchema);
+export type UserProfile = z.infer<typeof UserProfileSchema>;
 
-export type UserProfile = {
-  interests: string[];
-  goals: string[];
-  occupation: string;
-  birthday: string;
-  gender: GenderBiasOptions;
-  sexual_orientation: SexualOrientationBiasOptions;
-  relationship_status: RelationshipStatusBiasOptions;
-  willingness_to_pay: boolean;
-  budget: Budget;
-  willingness_for_online: boolean;
-  acceptable_times: AcceptableTimes;
-  postcode: string;
-  distance_threshold: DistanceThreshold;
-  time_commitment_in_minutes: number;
-};
+export type GenderBiasOptions = PersonalInfo["gender"];
+export type SexualOrientationBiasOptions = PersonalInfo["sexual_orientation"];
+export type RelationshipStatusBiasOptions = PersonalInfo["relationship_status"];
+export type DistanceThreshold = Location["distance_threshold"];
+export type StartEndTime = Availability["acceptable_times"]["weekdays"];
+export type AcceptableTimes = Availability["acceptable_times"];
