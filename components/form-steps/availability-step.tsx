@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { UseFormReturn } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Clock } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
@@ -15,16 +16,15 @@ import { Input } from "../ui/input";
 import { Checkbox } from "../ui/checkbox";
 
 interface AvailabilityStepProps {
-  formData: UserProfile;
-  setFormData: React.Dispatch<React.SetStateAction<UserProfile>>;
+  form: UseFormReturn<UserProfile>;
 }
 
 const dayLabels = ["weekdays", "weekends"] as const;
 
-export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({
-  formData,
-  setFormData,
-}) => {
+export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
+  const { setValue, watch } = form;
+  const formData = watch();
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -51,10 +51,7 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({
             <Select
               value={formData.time_commitment_in_minutes.toString()}
               onValueChange={(value: "120" | "240" | "360" | "1200") =>
-                setFormData((prev) => ({
-                  ...prev,
-                  time_commitment_in_minutes: parseInt(value),
-                }))
+                setValue("time_commitment_in_minutes", parseInt(value))
               }
             >
               <SelectTrigger className="border-2 border-violet-200 focus:border-violet-500">
@@ -91,16 +88,10 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({
                       type="time"
                       value={formData.acceptable_times[day].startTime}
                       onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          acceptable_times: {
-                            ...prev.acceptable_times,
-                            [day]: {
-                              ...prev.acceptable_times[day],
-                              startTime: e.target.value,
-                            },
-                          },
-                        }))
+                        setValue(
+                          `acceptable_times.${day}.startTime`,
+                          e.target.value
+                        )
                       }
                       disabled={formData.acceptable_times[day].allDay}
                     />
@@ -113,16 +104,10 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({
                       type="time"
                       value={formData.acceptable_times[day].endTime}
                       onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          acceptable_times: {
-                            ...prev.acceptable_times,
-                            [day]: {
-                              ...prev.acceptable_times[day],
-                              endTime: e.target.value,
-                            },
-                          },
-                        }))
+                        setValue(
+                          `acceptable_times.${day}.endTime`,
+                          e.target.value
+                        )
                       }
                       disabled={formData.acceptable_times[day].allDay}
                     />
@@ -133,16 +118,10 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({
                   <Checkbox
                     checked={formData.acceptable_times[day].allDay}
                     onCheckedChange={() => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        acceptable_times: {
-                          ...prev.acceptable_times,
-                          [day]: {
-                            ...prev.acceptable_times[day],
-                            allDay: !prev.acceptable_times[day].allDay,
-                          },
-                        },
-                      }));
+                      setValue(
+                        `acceptable_times.${day}.allDay`,
+                        !formData.acceptable_times[day].allDay
+                      );
                     }}
                     className="border-2 border-violet-300"
                   />

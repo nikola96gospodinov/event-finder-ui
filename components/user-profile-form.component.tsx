@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
-import { UserProfile } from "@/types/user-profile";
+import { UserProfile, UserProfileSchema } from "@/types/user-profile";
 import {
   PersonalInfoStep,
   InterestsGoalsStep,
@@ -21,48 +23,54 @@ import {
   ReviewStep,
 } from "@/components/form-steps";
 
+const defaultValues: UserProfile = {
+  interests: [],
+  goals: [],
+  occupation: "",
+  birthday: "",
+  gender: "other",
+  sexual_orientation: "other",
+  relationship_status: "other",
+  budget: 0,
+  willingness_for_online: false,
+  acceptable_times: {
+    weekdays: {
+      startTime: "",
+      endTime: "",
+    },
+    weekends: {
+      startTime: "",
+      endTime: "",
+    },
+  },
+  postcode: "",
+  distance_threshold: {
+    value: 20,
+    unit: "miles",
+  },
+  time_commitment_in_minutes: 60,
+};
+
 export const UserProfileForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<UserProfile>({
-    interests: [],
-    goals: [],
-    occupation: "",
-    birthday: "",
-    gender: "other",
-    sexual_orientation: "other",
-    relationship_status: "other",
-    willingness_to_pay: false,
-    budget: 0,
-    willingness_for_online: false,
-    acceptable_times: {
-      weekdays: {
-        startTime: "",
-        endTime: "",
-      },
-      weekends: {
-        startTime: "",
-        endTime: "",
-      },
-    },
-    postcode: "",
-    distance_threshold: {
-      value: 20,
-      unit: "miles",
-    },
-    time_commitment_in_minutes: 60,
-  });
 
-  const [tempInputs, setTempInputs] = useState({
-    interest: "",
-    goal: "",
+  const form = useForm<UserProfile>({
+    resolver: zodResolver(UserProfileSchema),
+    defaultValues,
+    mode: "onChange",
   });
 
   const totalSteps = 6;
   const progress = ((currentStep + 1) / totalSteps) * 100;
 
-  const nextStep = () => {
+  const nextStep = async () => {
+    // TODO: Fix
     if (currentStep < totalSteps - 1) {
-      setCurrentStep(currentStep + 1);
+      // Validate current step before proceeding
+      const isValid = await form.trigger();
+      if (isValid) {
+        setCurrentStep(currentStep + 1);
+      }
     }
   };
 
@@ -72,37 +80,26 @@ export const UserProfileForm = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (data: UserProfile) => {
     console.log("User Profile Data:");
-    console.log(JSON.stringify(formData, null, 2));
+    console.log(JSON.stringify(data, null, 2));
     alert("Profile submitted! ");
   };
 
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return (
-          <PersonalInfoStep formData={formData} setFormData={setFormData} />
-        );
+        return <PersonalInfoStep form={form} />;
       case 1:
-        return (
-          <InterestsGoalsStep
-            formData={formData}
-            setFormData={setFormData}
-            tempInputs={tempInputs}
-            setTempInputs={setTempInputs}
-          />
-        );
+        return <InterestsGoalsStep form={form} />;
       case 2:
-        return <LocationStep formData={formData} setFormData={setFormData} />;
+        return <LocationStep form={form} />;
       case 3:
-        return <BudgetStep formData={formData} setFormData={setFormData} />;
+        return <BudgetStep form={form} />;
       case 4:
-        return (
-          <AvailabilityStep formData={formData} setFormData={setFormData} />
-        );
+        return <AvailabilityStep form={form} />;
       case 5:
-        return <ReviewStep formData={formData} onSubmit={handleSubmit} />;
+        return <ReviewStep form={form} onSubmit={handleSubmit} />;
       default:
         return null;
     }

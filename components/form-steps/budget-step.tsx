@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { UseFormReturn } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -11,17 +12,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DollarSign } from "lucide-react";
-import { UserProfile, Budget } from "@/types/user-profile";
+import { UserProfile } from "@/types/user-profile";
 
 interface BudgetStepProps {
-  formData: UserProfile;
-  setFormData: React.Dispatch<React.SetStateAction<UserProfile>>;
+  form: UseFormReturn<UserProfile>;
 }
 
-export const BudgetStep: React.FC<BudgetStepProps> = ({
-  formData,
-  setFormData,
-}) => {
+export const BudgetStep: React.FC<BudgetStepProps> = ({ form }) => {
+  const { setValue, watch } = form;
+  const formData = watch();
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -48,11 +48,7 @@ export const BudgetStep: React.FC<BudgetStepProps> = ({
             value={formData.budget.toString()}
             onValueChange={(value) => {
               const budgetValue = parseInt(value);
-              setFormData((prev) => ({
-                ...prev,
-                budget: budgetValue as Budget,
-                willingness_to_pay: budgetValue > 0,
-              }));
+              setValue("budget", budgetValue);
             }}
           >
             <SelectTrigger className="border-2 border-emerald-200 focus:border-emerald-500">
@@ -77,10 +73,7 @@ export const BudgetStep: React.FC<BudgetStepProps> = ({
               id="willingness_for_online"
               checked={formData.willingness_for_online}
               onCheckedChange={(checked) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  willingness_for_online: !!checked,
-                }))
+                setValue("willingness_for_online", !!checked)
               }
               className="border-2 border-teal-300"
             />

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -19,14 +20,13 @@ import {
 } from "@/types/user-profile";
 
 interface PersonalInfoStepProps {
-  formData: UserProfile;
-  setFormData: React.Dispatch<React.SetStateAction<UserProfile>>;
+  form: UseFormReturn<UserProfile>;
 }
 
-export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
-  formData,
-  setFormData,
-}) => {
+export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ form }) => {
+  const { register, setValue, watch } = form;
+  const formData = watch();
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -47,22 +47,16 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2 group">
           <Label
-            htmlFor="age"
+            htmlFor="birthday"
             className="text-sm font-medium flex items-center gap-2"
           >
             <Star className="h-4 w-4 text-pink-500" />
             Birthday
           </Label>
           <Input
-            id="age"
+            id="birthday"
             type="date"
-            value={formData.birthday || ""}
-            onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
-                birthday: e.target.value,
-              }))
-            }
+            {...register("birthday")}
             placeholder="25"
             className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
           />
@@ -78,13 +72,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
           </Label>
           <Input
             id="occupation"
-            value={formData.occupation}
-            onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
-                occupation: e.target.value,
-              }))
-            }
+            {...register("occupation")}
             placeholder="Software Engineer"
             className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-300"
           />
@@ -95,7 +83,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
           <Select
             value={formData.gender}
             onValueChange={(value: GenderBiasOptions) =>
-              setFormData((prev) => ({ ...prev, gender: value }))
+              setValue("gender", value)
             }
           >
             <SelectTrigger className="border-2 border-purple-200 focus:border-purple-500 transition-all duration-300">
@@ -115,10 +103,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
           <Select
             value={formData.sexual_orientation}
             onValueChange={(value: SexualOrientationBiasOptions) =>
-              setFormData((prev) => ({
-                ...prev,
-                sexual_orientation: value,
-              }))
+              setValue("sexual_orientation", value)
             }
           >
             <SelectTrigger className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300">
@@ -140,10 +125,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({
           <Select
             value={formData.relationship_status}
             onValueChange={(value: RelationshipStatusBiasOptions) =>
-              setFormData((prev) => ({
-                ...prev,
-                relationship_status: value,
-              }))
+              setValue("relationship_status", value)
             }
           >
             <SelectTrigger className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300">

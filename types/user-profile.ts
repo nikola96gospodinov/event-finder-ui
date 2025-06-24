@@ -44,12 +44,7 @@ export type Location = z.infer<typeof LocationSchema>;
 
 // Step 4: Budget & Format
 export const BudgetSchema = z.object({
-  willingness_to_pay: z.boolean(),
-  budget: z
-    .enum(["0", "10", "20", "50", "100", "200", "500", "1000"])
-    .transform(
-      (val) => parseInt(val) as 0 | 10 | 20 | 50 | 100 | 200 | 500 | 1000
-    ),
+  budget: z.number().min(0),
   willingness_for_online: z.boolean(),
 });
 export type Budget = z.infer<typeof BudgetSchema>;

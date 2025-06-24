@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -9,52 +10,44 @@ import { Target } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
 interface InterestsGoalsStepProps {
-  formData: UserProfile;
-  setFormData: React.Dispatch<React.SetStateAction<UserProfile>>;
-  tempInputs: { interest: string; goal: string };
-  setTempInputs: React.Dispatch<
-    React.SetStateAction<{ interest: string; goal: string }>
-  >;
+  form: UseFormReturn<UserProfile>;
 }
 
 export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
-  formData,
-  setFormData,
-  tempInputs,
-  setTempInputs,
+  form,
 }) => {
+  const { setValue, watch } = form;
+  const formData = watch();
+
+  const [tempInterest, setTempInterest] = useState("");
+  const [tempGoal, setTempGoal] = useState("");
+
   const addInterest = () => {
-    if (tempInputs.interest.trim()) {
-      setFormData((prev) => ({
-        ...prev,
-        interests: [...prev.interests, tempInputs.interest.trim()],
-      }));
-      setTempInputs((prev) => ({ ...prev, interest: "" }));
+    if (tempInterest.trim()) {
+      setValue("interests", [...formData.interests, tempInterest.trim()]);
+      setTempInterest("");
     }
   };
 
   const addGoal = () => {
-    if (tempInputs.goal.trim()) {
-      setFormData((prev) => ({
-        ...prev,
-        goals: [...prev.goals, tempInputs.goal.trim()],
-      }));
-      setTempInputs((prev) => ({ ...prev, goal: "" }));
+    if (tempGoal.trim()) {
+      setValue("goals", [...formData.goals, tempGoal.trim()]);
+      setTempGoal("");
     }
   };
 
   const removeInterest = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      interests: prev.interests.filter((_, i) => i !== index),
-    }));
+    setValue(
+      "interests",
+      formData.interests.filter((_, i) => i !== index)
+    );
   };
 
   const removeGoal = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      goals: prev.goals.filter((_, i) => i !== index),
-    }));
+    setValue(
+      "goals",
+      formData.goals.filter((_, i) => i !== index)
+    );
   };
 
   return (
@@ -83,13 +76,8 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
           </p>
           <div className="flex gap-2 mb-4">
             <Input
-              value={tempInputs.goal}
-              onChange={(e) =>
-                setTempInputs((prev) => ({
-                  ...prev,
-                  goal: e.target.value,
-                }))
-              }
+              value={tempGoal}
+              onChange={(e) => setTempGoal(e.target.value)}
               placeholder="Enter a goal"
               onKeyPress={(e) => e.key === "Enter" && addGoal()}
               className="border-2 border-blue-200 focus:border-blue-500"
@@ -125,13 +113,8 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
           </p>
           <div className="flex gap-2 mb-4">
             <Input
-              value={tempInputs.interest}
-              onChange={(e) =>
-                setTempInputs((prev) => ({
-                  ...prev,
-                  interest: e.target.value,
-                }))
-              }
+              value={tempInterest}
+              onChange={(e) => setTempInterest(e.target.value)}
               placeholder="Enter an interest"
               onKeyPress={(e) => e.key === "Enter" && addInterest()}
               className="border-2 border-green-200 focus:border-green-500"

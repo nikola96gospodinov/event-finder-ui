@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -14,14 +15,13 @@ import { MapPin } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
 interface LocationStepProps {
-  formData: UserProfile;
-  setFormData: React.Dispatch<React.SetStateAction<UserProfile>>;
+  form: UseFormReturn<UserProfile>;
 }
 
-export const LocationStep: React.FC<LocationStepProps> = ({
-  formData,
-  setFormData,
-}) => {
+export const LocationStep: React.FC<LocationStepProps> = ({ form }) => {
+  const { register, setValue, watch } = form;
+  const formData = watch();
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -48,13 +48,7 @@ export const LocationStep: React.FC<LocationStepProps> = ({
             </Label>
             <Input
               id="postcode"
-              value={formData.postcode}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  postcode: e.target.value,
-                }))
-              }
+              {...register("postcode")}
               placeholder="EC1A 1BB"
               className="border-2 border-red-200 focus:border-red-500"
             />
@@ -74,13 +68,7 @@ export const LocationStep: React.FC<LocationStepProps> = ({
               type="number"
               value={formData.distance_threshold.value}
               onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  distance_threshold: {
-                    ...prev.distance_threshold,
-                    value: parseInt(e.target.value),
-                  },
-                }))
+                setValue("distance_threshold.value", parseInt(e.target.value))
               }
             />
           </div>
@@ -92,13 +80,7 @@ export const LocationStep: React.FC<LocationStepProps> = ({
             <Select
               value={formData.distance_threshold.unit}
               onValueChange={(value: "km" | "miles") =>
-                setFormData((prev) => ({
-                  ...prev,
-                  distance_threshold: {
-                    ...prev.distance_threshold,
-                    unit: value,
-                  },
-                }))
+                setValue("distance_threshold.unit", value)
               }
             >
               <SelectTrigger className="border-2 border-orange-200 focus:border-orange-500">

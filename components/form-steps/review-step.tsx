@@ -1,20 +1,21 @@
 "use client";
 
 import React from "react";
+import { UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Star, Clock, Heart, Users } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
 interface ReviewStepProps {
-  formData: UserProfile;
-  onSubmit: () => void;
+  form: UseFormReturn<UserProfile>;
+  onSubmit: (data: UserProfile) => void;
 }
 
-export const ReviewStep: React.FC<ReviewStepProps> = ({
-  formData,
-  onSubmit,
-}) => {
+export const ReviewStep: React.FC<ReviewStepProps> = ({ form, onSubmit }) => {
+  const { handleSubmit, watch } = form;
+  const formData = watch();
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -101,7 +102,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
               <p className="flex items-center gap-2">
                 <span className="font-semibold text-rose-600">💰 Budget:</span>
                 <span className="text-gray-700">
-                  {formData.willingness_to_pay ? `£${formData.budget}` : "Free"}
+                  {formData.budget ? `£${formData.budget}` : "Free"}
                 </span>
               </p>
               <p className="flex items-center gap-2">
@@ -194,7 +195,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
       </div>
 
       <Button
-        onClick={onSubmit}
+        onClick={handleSubmit(onSubmit)}
         className="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
       >
         🚀 Save My Profile
