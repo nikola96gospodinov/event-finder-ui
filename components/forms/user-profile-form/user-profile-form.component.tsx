@@ -29,7 +29,7 @@ import {
   BudgetStep,
   AvailabilityStep,
   ReviewStep,
-} from "@/components/form-steps";
+} from "@/components/forms/user-profile-form/form-steps";
 
 const stepsValidation = [
   PersonalInfoSchema,

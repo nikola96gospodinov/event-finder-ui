@@ -12,8 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "../ui/input";
-import { Checkbox } from "../ui/checkbox";
+import { Input } from "../../../ui/input";
+import { Checkbox } from "../../../ui/checkbox";
 
 interface AvailabilityStepProps {
   form: UseFormReturn<UserProfile>;
