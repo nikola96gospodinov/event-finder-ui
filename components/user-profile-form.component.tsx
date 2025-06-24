@@ -13,7 +13,15 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
-import { UserProfile, UserProfileSchema } from "@/types/user-profile";
+import {
+  UserProfile,
+  UserProfileSchema,
+  PersonalInfoSchema,
+  InterestsGoalsSchema,
+  LocationSchema,
+  BudgetSchema,
+  AvailabilitySchema,
+} from "@/types/user-profile";
 import {
   PersonalInfoStep,
   InterestsGoalsStep,
@@ -23,40 +31,19 @@ import {
   ReviewStep,
 } from "@/components/form-steps";
 
-const defaultValues: UserProfile = {
-  interests: [],
-  goals: [],
-  occupation: "",
-  birthday: "",
-  gender: "other",
-  sexual_orientation: "other",
-  relationship_status: "other",
-  budget: 0,
-  willingness_for_online: false,
-  acceptable_times: {
-    weekdays: {
-      startTime: "",
-      endTime: "",
-    },
-    weekends: {
-      startTime: "",
-      endTime: "",
-    },
-  },
-  postcode: "",
-  distance_threshold: {
-    value: 20,
-    unit: "miles",
-  },
-  time_commitment_in_minutes: 60,
-};
+const stepsValidation = [
+  PersonalInfoSchema,
+  InterestsGoalsSchema,
+  LocationSchema,
+  BudgetSchema,
+  AvailabilitySchema,
+];
 
 export const UserProfileForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const form = useForm<UserProfile>({
     resolver: zodResolver(UserProfileSchema),
-    defaultValues,
     mode: "onChange",
   });
 
@@ -64,11 +51,11 @@ export const UserProfileForm = () => {
   const progress = ((currentStep + 1) / totalSteps) * 100;
 
   const nextStep = async () => {
-    // TODO: Fix
     if (currentStep < totalSteps - 1) {
-      // Validate current step before proceeding
-      const isValid = await form.trigger();
-      if (isValid) {
+      const isValid = await stepsValidation[currentStep].safeParseAsync(
+        form.getValues()
+      );
+      if (isValid.success) {
         setCurrentStep(currentStep + 1);
       }
     }

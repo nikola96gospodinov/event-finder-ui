@@ -24,14 +24,17 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
 
   const addInterest = () => {
     if (tempInterest.trim()) {
-      setValue("interests", [...formData.interests, tempInterest.trim()]);
+      setValue("interests", [
+        ...(formData.interests ?? []),
+        tempInterest.trim(),
+      ]);
       setTempInterest("");
     }
   };
 
   const addGoal = () => {
     if (tempGoal.trim()) {
-      setValue("goals", [...formData.goals, tempGoal.trim()]);
+      setValue("goals", [...(formData.goals ?? []), tempGoal.trim()]);
       setTempGoal("");
     }
   };
@@ -91,7 +94,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
             </Button>
           </div>
           <div className="flex flex-wrap gap-2">
-            {formData.goals.map((goal, index) => (
+            {formData.goals?.map((goal, index) => (
               <Badge
                 key={index}
                 variant="secondary"
@@ -128,7 +131,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
             </Button>
           </div>
           <div className="flex flex-wrap gap-2">
-            {formData.interests.map((interest, index) => (
+            {formData.interests?.map((interest, index) => (
               <Badge
                 key={index}
                 variant="secondary"

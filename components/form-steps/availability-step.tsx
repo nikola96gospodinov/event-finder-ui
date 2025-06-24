@@ -49,7 +49,7 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
               ⏱️ How much time can you commit per event?
             </Label>
             <Select
-              value={formData.time_commitment_in_minutes.toString()}
+              value={formData?.time_commitment_in_minutes?.toString()}
               onValueChange={(value: "120" | "240" | "360" | "1200") =>
                 setValue("time_commitment_in_minutes", parseInt(value))
               }
@@ -86,14 +86,14 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
                     <Input
                       className="border-2 border-violet-200 focus:border-violet-500"
                       type="time"
-                      value={formData.acceptable_times[day].startTime}
+                      value={formData.acceptable_times?.[day]?.startTime}
                       onChange={(e) =>
                         setValue(
                           `acceptable_times.${day}.startTime`,
                           e.target.value
                         )
                       }
-                      disabled={formData.acceptable_times[day].allDay}
+                      disabled={formData.acceptable_times?.[day]?.allDay}
                     />
                   </div>
 
@@ -102,25 +102,26 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
                     <Input
                       className="border-2 border-violet-200 focus:border-violet-500"
                       type="time"
-                      value={formData.acceptable_times[day].endTime}
+                      value={formData.acceptable_times?.[day]?.endTime}
                       onChange={(e) =>
                         setValue(
                           `acceptable_times.${day}.endTime`,
                           e.target.value
                         )
                       }
-                      disabled={formData.acceptable_times[day].allDay}
+                      disabled={formData.acceptable_times?.[day]?.allDay}
                     />
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-2 mt-4">
                   <Checkbox
-                    checked={formData.acceptable_times[day].allDay}
+                    checked={formData.acceptable_times?.[day]?.allDay}
                     onCheckedChange={() => {
+                      const allDay = formData.acceptable_times?.[day]?.allDay;
                       setValue(
                         `acceptable_times.${day}.allDay`,
-                        !formData.acceptable_times[day].allDay
+                        allDay ? !allDay : true
                       );
                     }}
                     className="border-2 border-violet-300"

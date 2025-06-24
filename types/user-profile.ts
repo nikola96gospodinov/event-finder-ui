@@ -45,7 +45,7 @@ export type Location = z.infer<typeof LocationSchema>;
 // Step 4: Budget & Format
 export const BudgetSchema = z.object({
   budget: z.number().min(0),
-  willingness_for_online: z.boolean(),
+  willingness_for_online: z.boolean().optional(),
 });
 export type Budget = z.infer<typeof BudgetSchema>;
 

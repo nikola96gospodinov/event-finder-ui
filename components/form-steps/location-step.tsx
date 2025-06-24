@@ -66,10 +66,11 @@ export const LocationStep: React.FC<LocationStepProps> = ({ form }) => {
             <Input
               className="border-2 border-orange-200 focus:border-orange-500"
               type="number"
-              value={formData.distance_threshold.value}
+              value={formData.distance_threshold?.value}
               onChange={(e) =>
                 setValue("distance_threshold.value", parseInt(e.target.value))
               }
+              min={0}
             />
           </div>
 
@@ -78,7 +79,7 @@ export const LocationStep: React.FC<LocationStepProps> = ({ form }) => {
               🛣️ Units of Distance
             </Label>
             <Select
-              value={formData.distance_threshold.unit}
+              value={formData.distance_threshold?.unit}
               onValueChange={(value: "km" | "miles") =>
                 setValue("distance_threshold.unit", value)
               }

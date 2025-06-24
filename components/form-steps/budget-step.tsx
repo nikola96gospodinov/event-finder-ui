@@ -45,7 +45,7 @@ export const BudgetStep: React.FC<BudgetStepProps> = ({ form }) => {
             💰 Do you have a budget in mind for events?
           </Label>
           <Select
-            value={formData.budget.toString()}
+            value={formData?.budget?.toString()}
             onValueChange={(value) => {
               const budgetValue = parseInt(value);
               setValue("budget", budgetValue);
@@ -71,7 +71,7 @@ export const BudgetStep: React.FC<BudgetStepProps> = ({ form }) => {
           <div className="flex items-center space-x-3">
             <Checkbox
               id="willingness_for_online"
-              checked={formData.willingness_for_online}
+              checked={formData.willingness_for_online ?? false}
               onCheckedChange={(checked) =>
                 setValue("willingness_for_online", !!checked)
               }
