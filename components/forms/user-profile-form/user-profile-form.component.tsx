@@ -30,6 +30,7 @@ import {
   AvailabilityStep,
   ReviewStep,
 } from "@/components/forms/user-profile-form/form-steps";
+import { Background } from "@/components/containers/background.component";
 
 const stepsValidation = [
   PersonalInfoSchema,
@@ -93,7 +94,7 @@ export const UserProfileForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-indigo-100 p-16">
+    <Background>
       <div className="max-w-5xl mx-auto">
         <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
@@ -141,6 +142,6 @@ export const UserProfileForm = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </Background>
   );
 };
