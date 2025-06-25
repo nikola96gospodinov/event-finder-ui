@@ -8,14 +8,16 @@ import { Badge } from "@/components/ui/badge";
 import { Target } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
-interface InterestsGoalsStepProps {
+type InterestsGoalsStepProps = {
   form: UseFormReturn<UserProfile>;
-}
+};
 
-export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
-  form,
-}) => {
-  const { setValue, watch } = form;
+export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
+  const {
+    setValue,
+    watch,
+    formState: { errors },
+  } = form;
   const formData = watch();
 
   const [tempInterest, setTempInterest] = useState("");
@@ -28,6 +30,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
         tempInterest.trim(),
       ]);
       setTempInterest("");
+      form.trigger("interests");
     }
   };
 
@@ -35,6 +38,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
     if (tempGoal.trim()) {
       setValue("goals", [...(formData.goals ?? []), tempGoal.trim()]);
       setTempGoal("");
+      form.trigger("goals");
     }
   };
 
@@ -43,6 +47,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
       "interests",
       formData.interests.filter((_, i) => i !== index)
     );
+    form.trigger("interests");
   };
 
   const removeGoal = (index: number) => {
@@ -50,6 +55,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
       "goals",
       formData.goals.filter((_, i) => i !== index)
     );
+    form.trigger("goals");
   };
 
   return (
@@ -87,6 +93,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
                 onKeyPress={(e) => e.key === "Enter" && addGoal()}
                 className="border-2 border-blue-200 focus:border-blue-500"
                 label=""
+                error={errors.goals?.message}
               />
             </div>
             <Button
@@ -129,6 +136,7 @@ export const InterestsGoalsStep: React.FC<InterestsGoalsStepProps> = ({
                 onKeyPress={(e) => e.key === "Enter" && addInterest()}
                 className="border-2 border-green-200 focus:border-green-500"
                 label=""
+                error={errors.interests?.message}
               />
             </div>
             <Button

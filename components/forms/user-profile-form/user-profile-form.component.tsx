@@ -15,7 +15,6 @@ import { Progress } from "@/components/ui/progress";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import {
   UserProfile,
-  UserProfileSchema,
   PersonalInfoSchema,
   InterestsGoalsSchema,
   LocationSchema,
@@ -31,6 +30,7 @@ import {
   ReviewStep,
 } from "@/components/forms/user-profile-form/form-steps";
 import { Background } from "@/components/containers/background.component";
+import { z } from "zod";
 
 const stepsValidation = [
   PersonalInfoSchema,
@@ -38,13 +38,16 @@ const stepsValidation = [
   LocationSchema,
   BudgetSchema,
   AvailabilitySchema,
+  z.object({}),
 ];
 
 export const UserProfileForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
+  const currentStepValidation = stepsValidation[currentStep];
   const form = useForm<UserProfile>({
-    resolver: zodResolver(UserProfileSchema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(currentStepValidation as any),
     mode: "onChange",
   });
 
@@ -53,10 +56,8 @@ export const UserProfileForm = () => {
 
   const nextStep = async () => {
     if (currentStep < totalSteps - 1) {
-      const isValid = await stepsValidation[currentStep].safeParseAsync(
-        form.getValues()
-      );
-      if (isValid.success) {
+      const isValid = await form.trigger();
+      if (isValid) {
         setCurrentStep(currentStep + 1);
       }
     }

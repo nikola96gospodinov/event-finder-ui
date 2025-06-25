@@ -58,7 +58,7 @@ const SelectField = React.forwardRef<HTMLButtonElement, SelectFieldProps>(
     const selectId = id || generatedId;
 
     return (
-      <div className={cn("space-y-2", className)}>
+      <div className={cn("flex flex-col gap-2", className)}>
         {label && (
           <Label
             htmlFor={selectId}
@@ -76,8 +76,8 @@ const SelectField = React.forwardRef<HTMLButtonElement, SelectFieldProps>(
             ref={ref}
             id={selectId}
             className={cn(
-              error && "border-destructive focus:ring-destructive",
-              triggerClassName
+              triggerClassName,
+              error && "border-destructive focus:ring-destructive"
             )}
             aria-invalid={error ? "true" : "false"}
             aria-describedby={

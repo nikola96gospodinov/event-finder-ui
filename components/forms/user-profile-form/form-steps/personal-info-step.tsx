@@ -11,39 +11,44 @@ import {
   RelationshipStatusBiasOptions,
 } from "@/types/user-profile";
 
-interface PersonalInfoStepProps {
+const genderOptions = [
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "non-binary", label: "Non-binary" },
+  { value: "other", label: "Other" },
+];
+
+const sexualOrientationOptions = [
+  { value: "straight", label: "Straight" },
+  { value: "lesbian", label: "Lesbian" },
+  { value: "gay", label: "Gay" },
+  { value: "bisexual", label: "Bisexual" },
+  { value: "pansexual", label: "Pansexual" },
+  { value: "other", label: "Other" },
+];
+
+const relationshipStatusOptions = [
+  { value: "single", label: "Single" },
+  { value: "in-relationship", label: "In Relationship" },
+  { value: "married", label: "Married" },
+  { value: "divorced", label: "Divorced" },
+  { value: "widowed", label: "Widowed" },
+  { value: "polyamorous", label: "Polyamorous" },
+  { value: "other", label: "Other" },
+];
+
+type PersonalInfoStepProps = {
   form: UseFormReturn<UserProfile>;
-}
+};
 
-export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ form }) => {
-  const { register, setValue, watch } = form;
+export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = form;
   const formData = watch();
-
-  const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "non-binary", label: "Non-binary" },
-    { value: "other", label: "Other" },
-  ];
-
-  const sexualOrientationOptions = [
-    { value: "straight", label: "Straight" },
-    { value: "lesbian", label: "Lesbian" },
-    { value: "gay", label: "Gay" },
-    { value: "bisexual", label: "Bisexual" },
-    { value: "pansexual", label: "Pansexual" },
-    { value: "other", label: "Other" },
-  ];
-
-  const relationshipStatusOptions = [
-    { value: "single", label: "Single" },
-    { value: "in-relationship", label: "In Relationship" },
-    { value: "married", label: "Married" },
-    { value: "divorced", label: "Divorced" },
-    { value: "widowed", label: "Widowed" },
-    { value: "polyamorous", label: "Polyamorous" },
-    { value: "other", label: "Other" },
-  ];
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -69,6 +74,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ form }) => {
           {...register("birthday")}
           className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
           labelClassName="text-sm font-medium flex items-center gap-2"
+          error={errors.birthday?.message}
         />
 
         <InputField
@@ -77,42 +83,49 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ form }) => {
           placeholder="Software Engineer"
           className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-300"
           labelClassName="text-sm font-medium flex items-center gap-2"
+          error={errors.occupation?.message}
         />
 
         <SelectField
           label="Gender"
           options={genderOptions}
           value={formData.gender}
-          onValueChange={(value: string) =>
-            setValue("gender", value as GenderBiasOptions)
-          }
+          onValueChange={(value) => {
+            setValue("gender", value as GenderBiasOptions);
+            form.trigger("gender");
+          }}
           triggerClassName="border-2 border-purple-200 focus:border-purple-500 transition-all duration-300"
+          error={errors.gender?.message}
         />
 
         <SelectField
           label="Sexual Orientation"
           options={sexualOrientationOptions}
           value={formData.sexual_orientation}
-          onValueChange={(value: string) =>
+          onValueChange={(value) => {
             setValue(
               "sexual_orientation",
               value as SexualOrientationBiasOptions
-            )
-          }
+            );
+            form.trigger("sexual_orientation");
+          }}
           triggerClassName="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300"
+          error={errors.sexual_orientation?.message}
         />
 
         <SelectField
           label="Relationship Status"
           options={relationshipStatusOptions}
           value={formData.relationship_status}
-          onValueChange={(value: string) =>
+          onValueChange={(value) => {
             setValue(
               "relationship_status",
               value as RelationshipStatusBiasOptions
-            )
-          }
+            );
+            form.trigger("relationship_status");
+          }}
           triggerClassName="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300"
+          error={errors.relationship_status?.message}
         />
       </div>
     </div>

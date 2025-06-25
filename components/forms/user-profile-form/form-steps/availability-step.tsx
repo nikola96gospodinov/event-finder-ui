@@ -10,22 +10,26 @@ import {
 import { Clock } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
-interface AvailabilityStepProps {
+type AvailabilityStepProps = {
   form: UseFormReturn<UserProfile>;
-}
+};
 
 const dayLabels = ["weekdays", "weekends"] as const;
 
-export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
-  const { setValue, watch } = form;
-  const formData = watch();
+const timeCommitmentOptions = [
+  { value: "120", label: "Up to 2 hours" },
+  { value: "240", label: "Up to 4 hours" },
+  { value: "360", label: "Up to 6 hours" },
+  { value: "480", label: "More than 6 hours" },
+];
 
-  const timeCommitmentOptions = [
-    { value: "120", label: "Up to 2 hours" },
-    { value: "240", label: "Up to 4 hours" },
-    { value: "360", label: "Up to 6 hours" },
-    { value: "480", label: "More than 6 hours" },
-  ];
+export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
+  const {
+    setValue,
+    watch,
+    formState: { errors },
+  } = form;
+  const formData = watch();
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -50,11 +54,13 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
             label="⏱️ How much time can you commit per event?"
             options={timeCommitmentOptions}
             value={formData?.time_commitment_in_minutes?.toString()}
-            onValueChange={(value: string) =>
-              setValue("time_commitment_in_minutes", parseInt(value))
-            }
+            onValueChange={(value: string) => {
+              setValue("time_commitment_in_minutes", parseInt(value));
+              form.trigger("time_commitment_in_minutes");
+            }}
             triggerClassName="border-2 border-violet-200 focus:border-violet-500"
             labelClassName="text-lg font-semibold text-violet-700 flex items-center gap-2"
+            error={errors.time_commitment_in_minutes?.message}
           />
         </div>
 
@@ -76,28 +82,32 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
                     label="Start Time"
                     type="time"
                     value={formData.acceptable_times?.[day]?.startTime}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setValue(
                         `acceptable_times.${day}.startTime`,
                         e.target.value
-                      )
-                    }
+                      );
+                      form.trigger(`acceptable_times.${day}`);
+                    }}
                     disabled={formData.acceptable_times?.[day]?.allDay}
                     className="border-2 border-violet-200 focus:border-violet-500"
+                    error={errors.acceptable_times?.[day]?.startTime?.message}
                   />
 
                   <InputField
                     label="End Time"
                     type="time"
                     value={formData.acceptable_times?.[day]?.endTime}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setValue(
                         `acceptable_times.${day}.endTime`,
                         e.target.value
-                      )
-                    }
+                      );
+                      form.trigger(`acceptable_times.${day}`);
+                    }}
                     disabled={formData.acceptable_times?.[day]?.allDay}
                     className="border-2 border-violet-200 focus:border-violet-500"
+                    error={errors.acceptable_times?.[day]?.endTime?.message}
                   />
                 </div>
 
@@ -111,10 +121,18 @@ export const AvailabilityStep: React.FC<AvailabilityStepProps> = ({ form }) => {
                         `acceptable_times.${day}.allDay`,
                         allDay ? !allDay : true
                       );
+                      form.trigger(`acceptable_times.${day}`);
                     }}
                     checkboxClassName="border-2 border-violet-300"
+                    error={errors.acceptable_times?.[day]?.allDay?.message}
                   />
                 </div>
+
+                {errors.acceptable_times?.[day]?.message && (
+                  <p className="text-sm text-destructive mt-2">
+                    {errors.acceptable_times?.[day]?.message}
+                  </p>
+                )}
               </div>
             ))}
           </div>
