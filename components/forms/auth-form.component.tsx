@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,11 +17,44 @@ import { InputField } from "@/components/ui/form-inputs";
 import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 import { Background } from "../containers/background.component";
 
+// Zod schema for form validation
+const authSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Please enter a valid email address"),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(8, "Password must be at least 8 characters long")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    ),
+});
+
+type AuthFormData = z.infer<typeof authSchema>;
+
 export const AuthForm = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode") || "login";
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<AuthFormData>({
+    resolver: zodResolver(authSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   useEffect(() => {
     if (!searchParams.get("mode")) {
@@ -28,36 +64,26 @@ export const AuthForm = () => {
     }
   }, [pathname, replace, searchParams]);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    console.log(`${mode} attempt:`, formData);
-    alert(
-      `${mode ? "Login" : "Register"} functionality would be implemented here!`
-    );
+  const onSubmit = async (data: AuthFormData) => {
+    try {
+      console.log(`${mode} attempt:`, data);
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      alert(
+        `${
+          mode === "login" ? "Login" : "Register"
+        } functionality would be implemented here!`
+      );
+    } catch (error) {
+      console.error("Form submission error:", error);
+    }
   };
 
   const toggleMode = () => {
     const params = new URLSearchParams(searchParams);
     params.set("mode", mode === "register" ? "login" : "register");
     replace(`${pathname}?${params.toString()}`);
-    setFormData({
-      email: "",
-      password: "",
-    });
+    reset();
   };
 
   return (
@@ -78,15 +104,15 @@ export const AuthForm = () => {
           </CardHeader>
 
           <CardContent className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="relative">
                 <Mail className="absolute left-3 top-11 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
                 <InputField
                   label="Email Address"
                   type="email"
                   placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  error={errors.email?.message}
+                  {...register("email")}
                   className="pl-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
                   labelClassName="text-purple-700 font-semibold"
                   required
@@ -99,10 +125,8 @@ export const AuthForm = () => {
                   label="Password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={(e) =>
-                    handleInputChange("password", e.target.value)
-                  }
+                  error={errors.password?.message}
+                  {...register("password")}
                   className="pl-10 pr-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
                   labelClassName="text-purple-700 font-semibold"
                   required
@@ -122,10 +146,20 @@ export const AuthForm = () => {
 
               <Button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                {mode === "login" ? "Sign In" : "Create Account"}
-                <ArrowRight className="h-4 w-4" />
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    {mode === "login" ? "Signing In..." : "Creating Account..."}
+                  </>
+                ) : (
+                  <>
+                    {mode === "login" ? "Sign In" : "Create Account"}
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
               </Button>
             </form>
 

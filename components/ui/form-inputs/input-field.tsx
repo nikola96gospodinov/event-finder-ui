@@ -50,8 +50,8 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            error && "border-destructive focus-visible:ring-destructive",
-            className
+            className,
+            error && "border-destructive focus-visible:ring-destructive"
           )}
           aria-invalid={error ? "true" : "false"}
           aria-describedby={
