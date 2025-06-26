@@ -16,8 +16,9 @@ import {
 import { InputField } from "@/components/ui/form-inputs";
 import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 import { Background } from "../containers/background.component";
+import { useLogin } from "@/services/auth/login.service";
+import { useRegister } from "@/services/auth/register.service";
 
-// Zod schema for form validation
 const authSchema = z.object({
   email: z
     .string()
@@ -56,6 +57,9 @@ export const AuthForm = () => {
     },
   });
 
+  const { mutate: loginUser, isPending: isLoginPending } = useLogin();
+  const { mutate: registerUser, isPending: isRegisterPending } = useRegister();
+
   useEffect(() => {
     if (!searchParams.get("mode")) {
       const params = new URLSearchParams(searchParams);
@@ -65,17 +69,10 @@ export const AuthForm = () => {
   }, [pathname, replace, searchParams]);
 
   const onSubmit = async (data: AuthFormData) => {
-    try {
-      console.log(`${mode} attempt:`, data);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert(
-        `${
-          mode === "login" ? "Login" : "Register"
-        } functionality would be implemented here!`
-      );
-    } catch (error) {
-      console.error("Form submission error:", error);
+    if (mode === "login") {
+      loginUser(data);
+    } else {
+      registerUser(data);
     }
   };
 
@@ -146,10 +143,10 @@ export const AuthForm = () => {
 
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLoginPending || isRegisterPending}
                 className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                {isSubmitting ? (
+                {isSubmitting || isLoginPending || isRegisterPending ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                     {mode === "login" ? "Signing In..." : "Creating Account..."}
