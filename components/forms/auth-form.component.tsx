@@ -13,7 +13,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { InputField } from "@/components/ui/form-inputs";
+import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 import { useRegister } from "@/services/auth/register";
 import { useLogin } from "@/services/auth/sign-in.service";
@@ -43,12 +51,7 @@ export const AuthForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<AuthFormData>({
+  const form = useForm<AuthFormData>({
     resolver: zodResolver(authSchema),
     defaultValues: {
       email: "",
@@ -79,13 +82,13 @@ export const AuthForm = () => {
     const params = new URLSearchParams(searchParams);
     params.set("mode", mode === "register" ? "login" : "register");
     replace(`${pathname}?${params.toString()}`);
-    reset();
+    form.reset();
   };
 
-  const isLoading = isSubmitting || isLoggingIn || isRegistering;
+  const isLoading = form.formState.isSubmitting || isLoggingIn || isRegistering;
 
   return (
-    <div className="max-w-md mx-auto p-16">
+    <div className="max-w-xl mx-auto p-16">
       <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
           <CardTitle className="text-3xl font-bold flex items-center justify-center gap-3">
@@ -101,64 +104,86 @@ export const AuthForm = () => {
         </CardHeader>
 
         <CardContent className="p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="relative">
-              <Mail className="absolute left-3 top-11 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
-              <InputField
-                label="Email Address"
-                type="email"
-                placeholder="Enter your email"
-                error={errors.email?.message}
-                {...register("email")}
-                className="pl-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
-                labelClassName="text-purple-700 font-semibold"
-                required
-              />
-            </div>
-
-            <div className="relative">
-              <Lock className="absolute left-3 top-11 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
-              <InputField
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                error={errors.password?.message}
-                {...register("password")}
-                className="pl-10 pr-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
-                labelClassName="text-purple-700 font-semibold"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-11 transform -translate-y-1/2 text-purple-400 hover:text-purple-600 transition-colors z-10"
-              >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="relative flex flex-col gap-2">
+                      <Mail className="absolute left-3 top-10.5 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
+                      <FormLabel className="text-purple-700 font-semibold">
+                        Email Address
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Enter your email"
+                          className="pl-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
                 )}
-              </button>
-            </div>
+              />
 
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-            >
-              {isLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  {mode === "login" ? "Signing In..." : "Creating Account..."}
-                </>
-              ) : (
-                <>
-                  {mode === "login" ? "Sign In" : "Create Account"}
-                  <ArrowRight className="h-4 w-4" />
-                </>
-              )}
-            </Button>
-          </form>
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="relative flex flex-col gap-2">
+                      <Lock className="absolute left-3 top-10.5 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
+                      <FormLabel className="text-purple-700 font-semibold">
+                        Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Enter your password"
+                          className="pl-10 pr-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
+                          {...field}
+                        />
+                      </FormControl>
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-10.5 transform -translate-y-1/2 text-purple-400 hover:text-purple-600 transition-colors z-10"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </button>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    {mode === "login" ? "Signing In..." : "Creating Account..."}
+                  </>
+                ) : (
+                  <>
+                    {mode === "login" ? "Sign In" : "Create Account"}
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            </form>
+          </Form>
 
           <div className="mt-6 pt-6 border-t border-purple-200">
             <p className="text-center text-purple-600">

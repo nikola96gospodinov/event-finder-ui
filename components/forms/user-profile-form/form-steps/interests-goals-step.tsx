@@ -2,22 +2,24 @@
 
 import React, { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { InputField } from "@/components/ui/form-inputs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Target } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
+import {
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 
 type InterestsGoalsStepProps = {
   form: UseFormReturn<UserProfile>;
 };
 
 export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
-  const {
-    setValue,
-    watch,
-    formState: { errors },
-  } = form;
+  const { setValue, watch } = form;
   const formData = watch();
 
   const [tempInterest, setTempInterest] = useState("");
@@ -86,14 +88,23 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
           </div>
           <div className="flex gap-2 mb-4">
             <div className="flex-1">
-              <InputField
-                value={tempGoal}
-                onChange={(e) => setTempGoal(e.target.value)}
-                placeholder="Enter a goal"
-                onKeyPress={(e) => e.key === "Enter" && addGoal()}
-                className="border-2 border-blue-200 focus:border-blue-500"
-                label=""
-                error={errors.goals?.message}
+              <FormField
+                control={form.control}
+                name="goals"
+                render={() => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        value={tempGoal}
+                        onChange={(e) => setTempGoal(e.target.value)}
+                        placeholder="Enter a goal"
+                        onKeyPress={(e) => e.key === "Enter" && addGoal()}
+                        className="border-2 border-blue-200 focus:border-blue-500"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
             <Button
@@ -129,14 +140,23 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
           </div>
           <div className="flex gap-2 mb-4">
             <div className="flex-1">
-              <InputField
-                value={tempInterest}
-                onChange={(e) => setTempInterest(e.target.value)}
-                placeholder="Enter an interest"
-                onKeyPress={(e) => e.key === "Enter" && addInterest()}
-                className="border-2 border-green-200 focus:border-green-500"
-                label=""
-                error={errors.interests?.message}
+              <FormField
+                control={form.control}
+                name="interests"
+                render={() => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        value={tempInterest}
+                        onChange={(e) => setTempInterest(e.target.value)}
+                        placeholder="Enter an interest"
+                        onKeyPress={(e) => e.key === "Enter" && addInterest()}
+                        className="border-2 border-green-200 focus:border-green-500"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
             <Button

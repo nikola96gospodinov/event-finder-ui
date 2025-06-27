@@ -2,11 +2,22 @@
 
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-  InputField,
-  SelectField,
-  CheckboxField,
-} from "@/components/ui/form-inputs";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Clock } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
@@ -24,13 +35,6 @@ const timeCommitmentOptions = [
 ];
 
 export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
-  const {
-    setValue,
-    watch,
-    formState: { errors },
-  } = form;
-  const formData = watch();
-
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -50,17 +54,34 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
 
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-violet-50 to-purple-50 p-6 rounded-xl border border-violet-200">
-          <SelectField
-            label="⏱️ How much time can you commit per event?"
-            options={timeCommitmentOptions}
-            value={formData?.time_commitment_in_minutes?.toString()}
-            onValueChange={(value: string) => {
-              setValue("time_commitment_in_minutes", parseInt(value));
-              form.trigger("time_commitment_in_minutes");
-            }}
-            triggerClassName="border-2 border-violet-200 focus:border-violet-500"
-            labelClassName="text-lg font-semibold text-violet-700 flex items-center gap-2"
-            error={errors.time_commitment_in_minutes?.message}
+          <FormField
+            control={form.control}
+            name="time_commitment_in_minutes"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg font-semibold text-violet-700 flex items-center gap-2">
+                  ⏱️ How much time can you commit per event?
+                </FormLabel>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  value={field.value?.toString()}
+                >
+                  <FormControl>
+                    <SelectTrigger className="border-2 border-violet-200 focus:border-violet-500">
+                      <SelectValue placeholder="Select time commitment" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {timeCommitmentOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
 
@@ -78,61 +99,83 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                   {day}
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <InputField
-                    label="Start Time"
-                    type="time"
-                    value={formData.acceptable_times?.[day]?.startTime}
-                    onChange={(e) => {
-                      setValue(
-                        `acceptable_times.${day}.startTime`,
-                        e.target.value
-                      );
-                      form.trigger(`acceptable_times.${day}`);
-                    }}
-                    disabled={formData.acceptable_times?.[day]?.allDay}
-                    className="border-2 border-violet-200 focus:border-violet-500"
-                    error={errors.acceptable_times?.[day]?.startTime?.message}
+                  <FormField
+                    control={form.control}
+                    name={`acceptable_times.${day}.startTime`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Start Time</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="time"
+                            className="border-2 border-violet-200 focus:border-violet-500"
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              form.trigger(`acceptable_times.${day}`);
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
 
-                  <InputField
-                    label="End Time"
-                    type="time"
-                    value={formData.acceptable_times?.[day]?.endTime}
-                    onChange={(e) => {
-                      setValue(
-                        `acceptable_times.${day}.endTime`,
-                        e.target.value
-                      );
-                      form.trigger(`acceptable_times.${day}`);
-                    }}
-                    disabled={formData.acceptable_times?.[day]?.allDay}
-                    className="border-2 border-violet-200 focus:border-violet-500"
-                    error={errors.acceptable_times?.[day]?.endTime?.message}
+                  <FormField
+                    control={form.control}
+                    name={`acceptable_times.${day}.endTime`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>End Time</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="time"
+                            className="border-2 border-violet-200 focus:border-violet-500"
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              form.trigger(`acceptable_times.${day}`);
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
 
                 <div className="mt-4">
-                  <CheckboxField
-                    label="I am available at all times"
-                    checked={formData.acceptable_times?.[day]?.allDay}
-                    onCheckedChange={() => {
-                      const allDay = formData.acceptable_times?.[day]?.allDay;
-                      setValue(
-                        `acceptable_times.${day}.allDay`,
-                        allDay ? !allDay : true
-                      );
-                      form.trigger(`acceptable_times.${day}`);
-                    }}
-                    checkboxClassName="border-2 border-violet-300"
-                    error={errors.acceptable_times?.[day]?.allDay?.message}
+                  <FormField
+                    control={form.control}
+                    name={`acceptable_times.${day}.allDay`}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={(value) => {
+                              field.onChange(value);
+                              form.trigger(`acceptable_times.${day}`);
+                            }}
+                            className="border-2 border-violet-300"
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel className="text-violet-700">
+                            I am available at all times
+                          </FormLabel>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
 
-                {errors.acceptable_times?.[day]?.message && (
-                  <p className="text-sm text-destructive mt-2">
-                    {errors.acceptable_times?.[day]?.message}
-                  </p>
-                )}
+                  {form.formState.errors.acceptable_times?.[day]?.message && (
+                    <p className="text-sm text-destructive mt-2">
+                      {form.formState.errors.acceptable_times?.[day]?.message}
+                    </p>
+                  )}
+                </div>
               </div>
             ))}
           </div>

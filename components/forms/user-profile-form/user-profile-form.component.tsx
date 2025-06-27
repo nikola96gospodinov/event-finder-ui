@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Form } from "@/components/ui/form";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import {
   UserProfile,
@@ -115,7 +116,7 @@ export const UserProfileForm = () => {
         </CardHeader>
 
         <CardContent className="p-8">
-          {renderStep()}
+          <Form {...form}>{renderStep()}</Form>
 
           <div className="flex justify-between pt-8 border-t border-purple-200 mt-8">
             <Button

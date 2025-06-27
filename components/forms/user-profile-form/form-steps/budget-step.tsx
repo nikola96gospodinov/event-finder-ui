@@ -2,7 +2,21 @@
 
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { SelectField, CheckboxField } from "@/components/ui/form-inputs";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { DollarSign } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
@@ -22,13 +36,6 @@ type BudgetStepProps = {
 };
 
 export const BudgetStep = ({ form }: BudgetStepProps) => {
-  const {
-    setValue,
-    watch,
-    formState: { errors },
-  } = form;
-  const formData = watch();
-
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -48,32 +55,58 @@ export const BudgetStep = ({ form }: BudgetStepProps) => {
 
       <div className="space-y-6">
         <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border border-emerald-200">
-          <SelectField
-            label="💰 Do you have a budget in mind for events?"
-            options={budgetOptions}
-            value={formData?.budget?.toString()}
-            onValueChange={(value) => {
-              const budgetValue = parseInt(value);
-              setValue("budget", budgetValue);
-              form.trigger("budget");
-            }}
-            triggerClassName="border-2 border-emerald-200 focus:border-emerald-500"
-            labelClassName="text-lg font-semibold text-emerald-700 mb-4 block"
-            error={errors.budget?.message}
+          <FormField
+            control={form.control}
+            name="budget"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg font-semibold text-emerald-700 mb-4 block">
+                  💰 Do you have a budget in mind for events?
+                </FormLabel>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  value={field.value?.toString()}
+                >
+                  <FormControl>
+                    <SelectTrigger className="border-2 border-emerald-200 focus:border-emerald-500">
+                      <SelectValue placeholder="Select budget range" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {budgetOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
 
         <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-200">
-          <CheckboxField
-            label="💻 I'm open to attending virtual/online events"
-            checked={formData.willingness_for_online ?? false}
-            onCheckedChange={(checked) => {
-              setValue("willingness_for_online", !!checked);
-              form.trigger("willingness_for_online");
-            }}
-            checkboxClassName="border-2 border-teal-300"
-            labelClassName="text-lg font-medium text-teal-700"
-            error={errors.willingness_for_online?.message}
+          <FormField
+            control={form.control}
+            name="willingness_for_online"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="border-2 border-teal-300"
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel className="text-lg font-medium text-teal-700">
+                    💻 I&apos;m open to attending virtual/online events
+                  </FormLabel>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
       </div>

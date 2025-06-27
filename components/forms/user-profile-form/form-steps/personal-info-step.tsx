@@ -2,14 +2,23 @@
 
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { InputField, SelectField } from "@/components/ui/form-inputs";
-import { User } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import {
-  UserProfile,
-  GenderBiasOptions,
-  SexualOrientationBiasOptions,
-  RelationshipStatusBiasOptions,
-} from "@/types/user-profile";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { User } from "lucide-react";
+import { UserProfile } from "@/types/user-profile";
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -42,14 +51,6 @@ type PersonalInfoStepProps = {
 };
 
 export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
-  const {
-    register,
-    setValue,
-    watch,
-    formState: { errors },
-  } = form;
-  const formData = watch();
-
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -68,64 +69,125 @@ export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <InputField
-          label="Birthday"
-          type="date"
-          {...register("birthday")}
-          className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
-          labelClassName="text-sm font-medium flex items-center gap-2"
-          error={errors.birthday?.message}
+        <FormField
+          control={form.control}
+          name="birthday"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium flex items-center gap-2">
+                Birthday
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="date"
+                  className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        <InputField
-          label="Occupation"
-          {...register("occupation")}
-          placeholder="Software Engineer"
-          className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-300"
-          labelClassName="text-sm font-medium flex items-center gap-2"
-          error={errors.occupation?.message}
+        <FormField
+          control={form.control}
+          name="occupation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium flex items-center gap-2">
+                Occupation
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Software Engineer"
+                  className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-300"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        <SelectField
-          label="Gender"
-          options={genderOptions}
-          value={formData.gender}
-          onValueChange={(value) => {
-            setValue("gender", value as GenderBiasOptions);
-            form.trigger("gender");
-          }}
-          triggerClassName="border-2 border-purple-200 focus:border-purple-500 transition-all duration-300"
-          error={errors.gender?.message}
+        <FormField
+          control={form.control}
+          name="gender"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium flex items-center gap-2">
+                Gender
+              </FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger className="border-2 border-purple-200 focus:border-purple-500 transition-all duration-300">
+                    <SelectValue placeholder="Select gender" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {genderOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        <SelectField
-          label="Sexual Orientation"
-          options={sexualOrientationOptions}
-          value={formData.sexual_orientation}
-          onValueChange={(value) => {
-            setValue(
-              "sexual_orientation",
-              value as SexualOrientationBiasOptions
-            );
-            form.trigger("sexual_orientation");
-          }}
-          triggerClassName="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300"
-          error={errors.sexual_orientation?.message}
+        <FormField
+          control={form.control}
+          name="sexual_orientation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium flex items-center gap-2">
+                Sexual Orientation
+              </FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300">
+                    <SelectValue placeholder="Select orientation" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {sexualOrientationOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        <SelectField
-          label="Relationship Status"
-          options={relationshipStatusOptions}
-          value={formData.relationship_status}
-          onValueChange={(value) => {
-            setValue(
-              "relationship_status",
-              value as RelationshipStatusBiasOptions
-            );
-            form.trigger("relationship_status");
-          }}
-          triggerClassName="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300"
-          error={errors.relationship_status?.message}
+        <FormField
+          control={form.control}
+          name="relationship_status"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium flex items-center gap-2">
+                Relationship Status
+              </FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger className="border-2 border-indigo-200 focus:border-indigo-500 transition-all duration-300">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {relationshipStatusOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
         />
       </div>
     </div>
