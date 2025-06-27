@@ -17,7 +17,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ChevronDownIcon, User } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 
 const genderOptions = [
@@ -77,13 +84,38 @@ export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
               <FormLabel className="text-sm font-medium flex items-center gap-2">
                 Birthday
               </FormLabel>
-              <FormControl>
-                <Input
-                  type="date"
-                  className="border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
-                  {...field}
-                />
-              </FormControl>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-between font-normal border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
+                    >
+                      {field.value
+                        ? new Date(field.value).toLocaleDateString()
+                        : "Select date"}
+                      <ChevronDownIcon className="h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="w-auto overflow-hidden p-0"
+                  align="start"
+                >
+                  <Calendar
+                    mode="single"
+                    selected={field.value ? new Date(field.value) : undefined}
+                    captionLayout="dropdown"
+                    month={new Date(field.value)}
+                    onSelect={(date) => {
+                      field.onChange(date ? date.toISOString() : "");
+                    }}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                  />
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}

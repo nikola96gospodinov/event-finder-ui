@@ -108,12 +108,14 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                         <FormControl>
                           <Input
                             type="time"
-                            className="border-2 border-violet-200 focus:border-violet-500"
+                            className="border-2 border-violet-200 focus:border-violet-500 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                             {...field}
                             onChange={(e) => {
                               field.onChange(e);
                               form.trigger(`acceptable_times.${day}`);
                             }}
+                            step={1}
+                            max={form.watch(`acceptable_times.${day}.endTime`)}
                           />
                         </FormControl>
                         <FormMessage />
@@ -130,12 +132,16 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                         <FormControl>
                           <Input
                             type="time"
-                            className="border-2 border-violet-200 focus:border-violet-500"
+                            className="border-2 border-violet-200 focus:border-violet-500 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                             {...field}
                             onChange={(e) => {
                               field.onChange(e);
                               form.trigger(`acceptable_times.${day}`);
                             }}
+                            step={1}
+                            min={form.watch(
+                              `acceptable_times.${day}.startTime`
+                            )}
                           />
                         </FormControl>
                         <FormMessage />
