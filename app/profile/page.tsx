@@ -1,3 +1,5 @@
+"use client";
+
 import { UserProfileForm } from "@/components/forms/user-profile-form/user-profile-form.component";
 import { Spinner } from "@/components/ui/spinner";
 import { useFetchUser } from "@/services/auth/fetch-user";
