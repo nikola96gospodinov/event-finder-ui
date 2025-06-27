@@ -45,7 +45,7 @@ const sexualOrientationOptions = [
 
 const relationshipStatusOptions = [
   { value: "single", label: "Single" },
-  { value: "in-relationship", label: "In Relationship" },
+  { value: "in a relationship", label: "In Relationship" },
   { value: "married", label: "Married" },
   { value: "divorced", label: "Divorced" },
   { value: "widowed", label: "Widowed" },

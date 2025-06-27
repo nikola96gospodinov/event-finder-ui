@@ -20,7 +20,7 @@ export const PersonalInfoSchema = z.object({
   relationship_status: z.enum(
     [
       "single",
-      "in-relationship",
+      "in a relationship",
       "married",
       "divorced",
       "widowed",
