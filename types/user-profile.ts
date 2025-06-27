@@ -84,7 +84,7 @@ const acceptableTimesSchema = z
     allDay: z.boolean().optional(),
   })
   .superRefine((data, ctx) => {
-    if (data.startTime && data.endTime) {
+    if (data.startTime && data.endTime && !data.allDay) {
       if (data.startTime >= data.endTime) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,

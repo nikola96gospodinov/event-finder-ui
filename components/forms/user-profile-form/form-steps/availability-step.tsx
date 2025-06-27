@@ -116,6 +116,9 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                             }}
                             step={1}
                             max={form.watch(`acceptable_times.${day}.endTime`)}
+                            disabled={form.watch(
+                              `acceptable_times.${day}.allDay`
+                            )}
                           />
                         </FormControl>
                         <FormMessage />
@@ -141,6 +144,9 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                             step={1}
                             min={form.watch(
                               `acceptable_times.${day}.startTime`
+                            )}
+                            disabled={form.watch(
+                              `acceptable_times.${day}.allDay`
                             )}
                           />
                         </FormControl>
