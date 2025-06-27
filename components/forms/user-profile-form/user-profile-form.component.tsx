@@ -21,6 +21,7 @@ import {
   LocationSchema,
   BudgetSchema,
   AvailabilitySchema,
+  UserProfileSchema,
 } from "@/types/user-profile";
 import {
   PersonalInfoStep,
@@ -30,7 +31,6 @@ import {
   AvailabilityStep,
   ReviewStep,
 } from "@/components/forms/user-profile-form/form-steps";
-import { z } from "zod";
 
 const stepsValidation = [
   PersonalInfoSchema,
@@ -38,7 +38,7 @@ const stepsValidation = [
   LocationSchema,
   BudgetSchema,
   AvailabilitySchema,
-  z.object({}),
+  UserProfileSchema,
 ];
 
 export const UserProfileForm = () => {
@@ -69,12 +69,6 @@ export const UserProfileForm = () => {
     }
   };
 
-  const handleSubmit = (data: UserProfile) => {
-    console.log("User Profile Data:");
-    console.log(JSON.stringify(data, null, 2));
-    alert("Profile submitted! ");
-  };
-
   const renderStep = () => {
     switch (currentStep) {
       case 0:
@@ -88,7 +82,7 @@ export const UserProfileForm = () => {
       case 4:
         return <AvailabilityStep form={form} />;
       case 5:
-        return <ReviewStep form={form} onSubmit={handleSubmit} />;
+        return <ReviewStep form={form} />;
       default:
         return null;
     }

@@ -114,7 +114,7 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                               field.onChange(e);
                               form.trigger(`acceptable_times.${day}`);
                             }}
-                            step={1}
+                            step={60}
                             max={form.watch(`acceptable_times.${day}.endTime`)}
                             disabled={form.watch(
                               `acceptable_times.${day}.allDay`
@@ -141,7 +141,7 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                               field.onChange(e);
                               form.trigger(`acceptable_times.${day}`);
                             }}
-                            step={1}
+                            step={60}
                             min={form.watch(
                               `acceptable_times.${day}.startTime`
                             )}

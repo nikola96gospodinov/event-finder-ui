@@ -58,6 +58,12 @@ type PersonalInfoStepProps = {
 };
 
 export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
+  const [currentMonth, setCurrentMonth] = React.useState<Date | undefined>(
+    form.getValues("birthday")
+      ? new Date(form.getValues("birthday"))
+      : new Date()
+  );
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8 relative">
@@ -106,10 +112,14 @@ export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
                     mode="single"
                     selected={field.value ? new Date(field.value) : undefined}
                     captionLayout="dropdown"
-                    month={new Date(field.value)}
+                    month={currentMonth}
                     onSelect={(date) => {
                       field.onChange(date ? date.toISOString() : "");
+                      if (date) {
+                        setCurrentMonth(date);
+                      }
                     }}
+                    onMonthChange={setCurrentMonth}
                     disabled={(date) =>
                       date > new Date() || date < new Date("1900-01-01")
                     }

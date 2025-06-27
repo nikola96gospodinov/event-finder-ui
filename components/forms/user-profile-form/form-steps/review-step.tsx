@@ -6,15 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Star, Clock, Heart, Users } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
+import { useCreateProfile } from "@/services/profile/create-profile.service";
 
-interface ReviewStepProps {
+type ReviewStepProps = {
   form: UseFormReturn<UserProfile>;
-  onSubmit: (data: UserProfile) => void;
-}
+};
 
-export const ReviewStep: React.FC<ReviewStepProps> = ({ form, onSubmit }) => {
+export const ReviewStep = ({ form }: ReviewStepProps) => {
   const { handleSubmit, watch } = form;
   const formData = watch();
+
+  const { mutate: createProfile, isPending, isError } = useCreateProfile();
+
+  const onSubmit = (data: UserProfile) => {
+    createProfile(data);
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -197,9 +203,16 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({ form, onSubmit }) => {
       <Button
         onClick={handleSubmit(onSubmit)}
         className="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+        disabled={isPending}
       >
-        🚀 Save My Profile
+        {isPending ? "Saving..." : "🚀 Save My Profile"}
       </Button>
+
+      {isError && (
+        <div className="text-red-500 text-sm">
+          Something went wrong. Please try again
+        </div>
+      )}
     </div>
   );
 };

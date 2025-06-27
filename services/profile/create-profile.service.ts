@@ -27,10 +27,18 @@ const createProfile = async (profile: UserProfile) => {
     interests: profile.interests,
     goals: profile.goals,
     willingness_for_online: profile.willingness_for_online,
-    weekday_start_time: profile.acceptable_times.weekdays.startTime,
-    weekday_end_time: profile.acceptable_times.weekdays.endTime,
-    weekend_start_time: profile.acceptable_times.weekends.startTime,
-    weekend_end_time: profile.acceptable_times.weekends.endTime,
+    weekday_start_time: profile.acceptable_times.weekdays.allDay
+      ? null
+      : profile.acceptable_times.weekdays.startTime,
+    weekday_end_time: profile.acceptable_times.weekdays.allDay
+      ? null
+      : profile.acceptable_times.weekdays.endTime,
+    weekend_start_time: profile.acceptable_times.weekends.allDay
+      ? null
+      : profile.acceptable_times.weekends.startTime,
+    weekend_end_time: profile.acceptable_times.weekends.allDay
+      ? null
+      : profile.acceptable_times.weekends.endTime,
   });
 
   if (error) {
