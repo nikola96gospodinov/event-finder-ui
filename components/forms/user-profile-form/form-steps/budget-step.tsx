@@ -91,19 +91,17 @@ export const BudgetStep = ({ form }: BudgetStepProps) => {
             control={form.control}
             name="willingness_for_online"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormItem className="flex flex-row items-center gap-x-3 space-y-0">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    className="border-2 border-teal-300"
+                    className="border-2 border-teal-300 data-[state=checked]:bg-teal-500 data-[state=checked]:border-teal-600 data-[state=checked]:text-white w-5 h-5 flex items-center justify-center"
                   />
                 </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel className="text-lg font-medium text-teal-700">
-                    💻 I&apos;m open to attending virtual/online events
-                  </FormLabel>
-                </div>
+                <FormLabel className="text-md font-medium text-teal-700 m-0 p-0 leading-none">
+                  💻 I&apos;m open to attending virtual/online events
+                </FormLabel>
                 <FormMessage />
               </FormItem>
             )}

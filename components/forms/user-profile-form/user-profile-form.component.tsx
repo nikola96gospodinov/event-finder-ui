@@ -102,7 +102,11 @@ export const UserProfileForm = () => {
             make.
           </CardDescription>
           <div className="mt-6">
-            <Progress value={progress} className="w-full h-3 bg-white/20" />
+            <Progress
+              value={progress}
+              className="w-full h-3 bg-white/20"
+              indicatorClassName="bg-purple-50"
+            />
             <p className="text-sm text-purple-50 mt-3 font-semibold">
               Step {currentStep + 1} of {totalSteps} Complete
             </p>
