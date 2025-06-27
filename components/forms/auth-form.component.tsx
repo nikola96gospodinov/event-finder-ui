@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/card";
 import { InputField } from "@/components/ui/form-inputs";
 import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
-import { Background } from "../containers/background.component";
+import { useRegister } from "@/services/auth/register";
+import { useLogin } from "@/services/auth/sign-in.service";
 
 const authSchema = z.object({
   email: z
@@ -36,7 +37,7 @@ type AuthFormData = z.infer<typeof authSchema>;
 
 export const AuthForm = () => {
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const { replace, push } = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode") || "login";
 
@@ -55,16 +56,23 @@ export const AuthForm = () => {
     },
   });
 
-  useEffect(() => {
-    if (!searchParams.get("mode")) {
-      const params = new URLSearchParams(searchParams);
-      params.set("mode", "login");
-      replace(`${pathname}?${params.toString()}`);
-    }
-  }, [pathname, replace, searchParams]);
+  const { mutate: loginUser, isPending: isLoggingIn } = useLogin();
+  const { mutate: registerUser, isPending: isRegistering } = useRegister();
 
   const onSubmit = async (data: AuthFormData) => {
-    console.log(data);
+    if (mode === "login") {
+      loginUser(data, {
+        onSuccess: () => {
+          push("/profile");
+        },
+      });
+    } else {
+      registerUser(data, {
+        onSuccess: () => {
+          push("/profile");
+        },
+      });
+    }
   };
 
   const toggleMode = () => {
@@ -74,99 +82,99 @@ export const AuthForm = () => {
     reset();
   };
 
+  const isLoading = isSubmitting || isLoggingIn || isRegistering;
+
   return (
-    <Background>
-      <div className="max-w-md mx-auto">
-        <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
-            <CardTitle className="text-3xl font-bold flex items-center justify-center gap-3">
-              <Sparkles className="h-6 w-6" />
-              {mode === "login" ? "Welcome Back" : "Join Us"}
-              <Sparkles className="h-6 w-6" />
-            </CardTitle>
-            <CardDescription className="text-purple-100 text-base">
-              {mode === "login"
-                ? "Sign in to your account to continue"
-                : "Create your account to get started"}
-            </CardDescription>
-          </CardHeader>
+    <div className="max-w-md mx-auto p-16">
+      <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+        <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
+          <CardTitle className="text-3xl font-bold flex items-center justify-center gap-3">
+            <Sparkles className="h-6 w-6" />
+            {mode === "login" ? "Welcome Back" : "Join Us"}
+            <Sparkles className="h-6 w-6" />
+          </CardTitle>
+          <CardDescription className="text-purple-100 text-base">
+            {mode === "login"
+              ? "Sign in to your account to continue"
+              : "Create your account to get started"}
+          </CardDescription>
+        </CardHeader>
 
-          <CardContent className="p-8">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="relative">
-                <Mail className="absolute left-3 top-11 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
-                <InputField
-                  label="Email Address"
-                  type="email"
-                  placeholder="Enter your email"
-                  error={errors.email?.message}
-                  {...register("email")}
-                  className="pl-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
-                  labelClassName="text-purple-700 font-semibold"
-                  required
-                />
-              </div>
-
-              <div className="relative">
-                <Lock className="absolute left-3 top-11 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
-                <InputField
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  error={errors.password?.message}
-                  {...register("password")}
-                  className="pl-10 pr-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
-                  labelClassName="text-purple-700 font-semibold"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-11 transform -translate-y-1/2 text-purple-400 hover:text-purple-600 transition-colors z-10"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </button>
-              </div>
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    {mode === "login" ? "Signing In..." : "Creating Account..."}
-                  </>
-                ) : (
-                  <>
-                    {mode === "login" ? "Sign In" : "Create Account"}
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </form>
-
-            <div className="mt-6 pt-6 border-t border-purple-200">
-              <p className="text-center text-purple-600">
-                {mode === "login"
-                  ? "Don't have an account?"
-                  : "Already have an account?"}
-                <button
-                  onClick={toggleMode}
-                  className="ml-2 text-purple-800 font-semibold hover:text-purple-600 underline transition-colors"
-                >
-                  {mode === "login" ? "Sign up" : "Sign in"}
-                </button>
-              </p>
+        <CardContent className="p-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="relative">
+              <Mail className="absolute left-3 top-11 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
+              <InputField
+                label="Email Address"
+                type="email"
+                placeholder="Enter your email"
+                error={errors.email?.message}
+                {...register("email")}
+                className="pl-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
+                labelClassName="text-purple-700 font-semibold"
+                required
+              />
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </Background>
+
+            <div className="relative">
+              <Lock className="absolute left-3 top-11 transform -translate-y-1/2 h-4 w-4 text-purple-400 z-10" />
+              <InputField
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                error={errors.password?.message}
+                {...register("password")}
+                className="pl-10 pr-10 border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500/20 transition-all duration-300"
+                labelClassName="text-purple-700 font-semibold"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-11 transform -translate-y-1/2 text-purple-400 hover:text-purple-600 transition-colors z-10"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  {mode === "login" ? "Signing In..." : "Creating Account..."}
+                </>
+              ) : (
+                <>
+                  {mode === "login" ? "Sign In" : "Create Account"}
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </Button>
+          </form>
+
+          <div className="mt-6 pt-6 border-t border-purple-200">
+            <p className="text-center text-purple-600">
+              {mode === "login"
+                ? "Don't have an account?"
+                : "Already have an account?"}
+              <button
+                onClick={toggleMode}
+                className="ml-2 text-purple-800 font-semibold hover:text-purple-600 underline transition-colors"
+              >
+                {mode === "login" ? "Sign up" : "Sign in"}
+              </button>
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

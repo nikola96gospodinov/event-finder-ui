@@ -21,7 +21,7 @@ import {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-indigo-100">
+    <>
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-purple-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -252,6 +252,6 @@ export default function LandingPage() {
           </p>
         </div>
       </footer>
-    </div>
+    </>
   );
 }

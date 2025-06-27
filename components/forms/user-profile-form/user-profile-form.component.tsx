@@ -29,7 +29,6 @@ import {
   AvailabilityStep,
   ReviewStep,
 } from "@/components/forms/user-profile-form/form-steps";
-import { Background } from "@/components/containers/background.component";
 import { z } from "zod";
 
 const stepsValidation = [
@@ -95,54 +94,52 @@ export const UserProfileForm = () => {
   };
 
   return (
-    <Background>
-      <div className="max-w-5xl mx-auto">
-        <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
-            <CardTitle className="text-4xl font-bold flex items-center justify-center gap-3">
-              <Sparkles className="h-8 w-8" />
-              Profile Builder
-              <Sparkles className="h-8 w-8" />
-            </CardTitle>
-            <CardDescription className="text-purple-50 text-lg font-semibold">
-              The more we know about you the more accurate recommendations we
-              can make.
-            </CardDescription>
-            <div className="mt-6">
-              <Progress value={progress} className="w-full h-3 bg-white/20" />
-              <p className="text-sm text-purple-50 mt-3 font-semibold">
-                Step {currentStep + 1} of {totalSteps} Complete
-              </p>
-            </div>
-          </CardHeader>
+    <div className="max-w-4xl mx-auto p-16">
+      <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+        <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
+          <CardTitle className="text-4xl font-bold flex items-center justify-center gap-3">
+            <Sparkles className="h-8 w-8" />
+            Profile Builder
+            <Sparkles className="h-8 w-8" />
+          </CardTitle>
+          <CardDescription className="text-purple-50 text-lg font-semibold">
+            The more we know about you the more accurate recommendations we can
+            make.
+          </CardDescription>
+          <div className="mt-6">
+            <Progress value={progress} className="w-full h-3 bg-white/20" />
+            <p className="text-sm text-purple-50 mt-3 font-semibold">
+              Step {currentStep + 1} of {totalSteps} Complete
+            </p>
+          </div>
+        </CardHeader>
 
-          <CardContent className="p-8">
-            {renderStep()}
+        <CardContent className="p-8">
+          {renderStep()}
 
-            <div className="flex justify-between pt-8 border-t border-purple-200 mt-8">
+          <div className="flex justify-between pt-8 border-t border-purple-200 mt-8">
+            <Button
+              onClick={prevStep}
+              disabled={currentStep === 0}
+              variant="outline"
+              className="flex items-center gap-2 border-2 border-purple-300 text-purple-600 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+            >
+              <ChevronLeft className="h-5 w-5" />
+              Previous
+            </Button>
+
+            {currentStep < totalSteps - 1 ? (
               <Button
-                onClick={prevStep}
-                disabled={currentStep === 0}
-                variant="outline"
-                className="flex items-center gap-2 border-2 border-purple-300 text-purple-600 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                onClick={nextStep}
+                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
               >
-                <ChevronLeft className="h-5 w-5" />
-                Previous
+                Next
+                <ChevronRight className="h-5 w-5" />
               </Button>
-
-              {currentStep < totalSteps - 1 ? (
-                <Button
-                  onClick={nextStep}
-                  className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
-                >
-                  Next
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-              ) : null}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </Background>
+            ) : null}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

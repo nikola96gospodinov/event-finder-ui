@@ -6,7 +6,7 @@ type BackgroundAtomProps = {
 
 export const Background = ({ children }: BackgroundAtomProps) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-indigo-100 p-16">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-indigo-100">
       {children}
     </div>
   );
