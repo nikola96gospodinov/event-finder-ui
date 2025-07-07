@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 
-type RunAgentParams = {
+type Props = {
   onlyHighlyRelevant: boolean;
 };
 
-const runAgent = async (params: RunAgentParams) => {
+const runAgent = async ({ onlyHighlyRelevant }: Props) => {
   const {
     data: { session },
     error,
@@ -20,7 +20,7 @@ const runAgent = async (params: RunAgentParams) => {
   }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/run-agent?only_highly_relevant=${params.onlyHighlyRelevant}`,
+    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/run-agent?only_highly_relevant=${onlyHighlyRelevant}`,
     {
       method: "POST",
       headers: {
