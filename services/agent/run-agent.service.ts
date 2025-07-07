@@ -1,16 +1,31 @@
 import { useMutation } from "@tanstack/react-query";
+import { supabase } from "@/lib/supabase";
 
 type RunAgentParams = {
   onlyHighlyRelevant: boolean;
 };
 
 const runAgent = async (params: RunAgentParams) => {
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    throw new Error("Failed to get authentication session");
+  }
+
+  if (!session?.access_token) {
+    throw new Error("No authentication token available");
+  }
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AGENT_API_URL}/run-agent?only_highly_relevant=${params.onlyHighlyRelevant}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${session.access_token}`,
       },
     }
   );
