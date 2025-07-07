@@ -61,8 +61,8 @@ export default function RunPage() {
 
   return (
     <div className="max-w-5xl mx-auto p-16">
+      <Header />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <Header />
         <SummaryCard profile={profile} />
         <AgentControlCard />
       </div>
