@@ -5,10 +5,8 @@ type RunAgentParams = {
 };
 
 const runAgent = async (params: RunAgentParams) => {
-  console.log("params", params);
-
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/run-agent`,
+    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/run-agent?only_highly_relevant=${params.onlyHighlyRelevant}`,
     {
       method: "POST",
       headers: {
