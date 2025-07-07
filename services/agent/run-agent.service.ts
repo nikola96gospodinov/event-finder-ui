@@ -5,6 +5,8 @@ type RunAgentParams = {
 };
 
 const runAgent = async (params: RunAgentParams) => {
+  console.log("params", params);
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AGENT_API_URL}/run-agent`,
     {
@@ -12,7 +14,6 @@ const runAgent = async (params: RunAgentParams) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(params),
     }
   );
 

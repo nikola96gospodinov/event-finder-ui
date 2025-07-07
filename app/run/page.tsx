@@ -25,7 +25,6 @@ import {
   Edit3,
   Play,
   CheckCircle,
-  Mail,
   Sparkles,
   ArrowRight,
   Cake,
@@ -33,6 +32,7 @@ import {
   Radius,
   Banknote,
   TreePalm,
+  Clock3,
 } from "lucide-react";
 
 export default function RunPage() {
@@ -252,12 +252,13 @@ export default function RunPage() {
                   </h3>
                   <p className="text-lg text-purple-800 mb-6">
                     Your event search is now running. You&apos;ll receive the
-                    results via email shortly.
+                    results via email.
                   </p>
-                  <div className="flex items-center justify-center gap-3 text-sm text-purple-600 bg-purple-50 rounded-lg p-4">
-                    <Mail className="h-5 w-5" />
+                  <div className="flex items-center justify-center gap-3 text-sm text-purple-600 bg-purple-50 rounded-lg p-4 border border-purple-200">
+                    <Clock3 className="h-5 w-5" />
                     <span className="font-medium">
-                      Check your email: {user.email}
+                      It might take up to a few hours for the results to be
+                      ready.
                     </span>
                   </div>
                 </div>
@@ -317,18 +318,9 @@ export default function RunPage() {
                     className="w-full h-14 text-xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white transition-all duration-300 hover:scale-105 shadow-lg"
                     size="lg"
                   >
-                    {isRunning ? (
-                      <>
-                        <Spinner size={24} />
-                        <span className="ml-3">Running Agent...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Play className="mr-3 h-6 w-6" />
-                        Start Event Search
-                        <ArrowRight className="ml-3 h-6 w-6" />
-                      </>
-                    )}
+                    <Play className="mr-3 h-6 w-6" />
+                    Start Event Search
+                    <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                 </>
               )}
