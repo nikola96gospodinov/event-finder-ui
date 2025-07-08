@@ -39,6 +39,7 @@ const createProfile = async (profile: UserProfile) => {
     weekend_end_time: profile.acceptable_times.weekends.allDay
       ? null
       : profile.acceptable_times.weekends.endTime,
+    time_commitment_in_minutes: profile.time_commitment_in_minutes,
   });
 
   if (error) {
