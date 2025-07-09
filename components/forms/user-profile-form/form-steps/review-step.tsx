@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Star, Clock, Heart, Users } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
-import { useCreateProfile } from "@/services/profile/create-profile.service";
+import { useSaveProfile } from "@/services/profile/save-profile.service";
 
 type ReviewStepProps = {
   form: UseFormReturn<UserProfile>;
@@ -16,7 +16,7 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
   const { handleSubmit, watch } = form;
   const formData = watch();
 
-  const { mutate: createProfile, isPending, isError } = useCreateProfile();
+  const { mutate: createProfile, isPending, isError } = useSaveProfile();
 
   const onSubmit = (data: UserProfile) => {
     createProfile(data);
