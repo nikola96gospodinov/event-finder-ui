@@ -18,7 +18,7 @@ export const CTASection = () => {
   return (
     <section className="pb-20 pt-10 px-4">
       <div className="max-w-4xl mx-auto text-center">
-        <Card className="shadow-2xl border-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+        <Card className="shadow-2xl border-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
           <CardHeader className="text-center">
             <CardTitle className="text-4xl font-bold">
               Ready to Discover Amazing Events?
@@ -28,12 +28,9 @@ export const CTASection = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center pb-8">
-            <Link href="/profile">
-              <Button
-                size="lg"
-                className="bg-white text-purple-600 hover:bg-purple-50 text-lg px-8 py-4 font-semibold"
-              >
-                {user ? "View My Profile" : "Start Your Profile"}
+            <Link href={user ? "/run" : "/auth"}>
+              <Button size="lg" variant="secondary">
+                {user ? "Run the agent" : "Create your profile"}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

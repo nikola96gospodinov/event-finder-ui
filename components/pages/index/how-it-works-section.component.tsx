@@ -9,7 +9,7 @@ import { User, Search, Mail } from "lucide-react";
 
 export const HowItWorksSection = () => {
   return (
-    <section className="py-20 px-4 bg-white/40">
+    <section className="py-20 px-4 bg-white/80">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-purple-900 mb-4">

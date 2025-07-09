@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, PlayIcon } from "lucide-react";
 import { useFetchUser } from "@/services/auth/fetch-user";
 
 export const HeroSection = () => {
@@ -25,12 +25,9 @@ export const HeroSection = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href={user ? "/run" : "/auth"}>
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-lg px-8 py-4"
-            >
+            <Button size="lg">
+              <PlayIcon className="ml-2 h-5 w-5" />
               {user ? "Run the agent" : "Create your profile"}
-              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
         </div>
