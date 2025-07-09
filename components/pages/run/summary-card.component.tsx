@@ -18,14 +18,16 @@ import {
   Radius,
   Banknote,
   TreePalm,
+  Zap,
 } from "lucide-react";
 import { Database } from "@/types/database.types";
 
 interface SummaryCardProps {
   profile: Database["public"]["Tables"]["profiles"]["Row"];
+  runs: Database["public"]["Tables"]["runs"]["Row"][];
 }
 
-export const SummaryCard = ({ profile }: SummaryCardProps) => {
+export const SummaryCard = ({ profile, runs }: SummaryCardProps) => {
   const formatTime = (time: string | null) => {
     if (!time) return "All day";
     return new Date(`2000-01-01T${time}`).toLocaleTimeString([], {
@@ -38,6 +40,11 @@ export const SummaryCard = ({ profile }: SummaryCardProps) => {
     if (budget === 0) return "Free";
     return `£${budget}`;
   };
+
+  const runsUsed = runs.length;
+  const maxRuns = 2;
+  const runsLeft = maxRuns - runsUsed;
+  const isOutOfRuns = runsLeft <= 0;
 
   return (
     <div className="lg:col-span-1">
@@ -52,6 +59,26 @@ export const SummaryCard = ({ profile }: SummaryCardProps) => {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 space-y-6">
+          {/* Run Usage Section */}
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="h-5 w-5 text-purple-600" />
+              <h4 className="font-semibold text-purple-900">Monthly Runs</h4>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-purple-700">Runs remaining:</span>
+                <span
+                  className={`font-semibold ${
+                    isOutOfRuns ? "text-red-600" : "text-green-600"
+                  }`}
+                >
+                  {isOutOfRuns ? "0" : runsLeft}
+                </span>
+              </div>
+            </div>
+          </div>
+
           <div className="space-y-2">
             <div className="flex items-center gap-3 text-sm text-purple-800">
               <Cake className="h-4 w-4 text-purple-600" />
