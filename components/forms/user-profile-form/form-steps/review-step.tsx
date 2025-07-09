@@ -7,12 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Star, Clock, Heart, Users } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 import { useSaveProfile } from "@/services/profile/save-profile.service";
+import { useRouter } from "next/navigation";
 
 type ReviewStepProps = {
   form: UseFormReturn<UserProfile>;
 };
 
 export const ReviewStep = ({ form }: ReviewStepProps) => {
+  const router = useRouter();
   const { handleSubmit, watch } = form;
   const formData = watch();
 
@@ -20,6 +22,7 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
 
   const onSubmit = (data: UserProfile) => {
     createProfile(data);
+    router.push("/run");
   };
 
   return (
