@@ -117,21 +117,10 @@ export const SummaryCard = ({ profile }: SummaryCardProps) => {
             </div>
             <div className="flex flex-wrap gap-2">
               {profile.interests?.slice(0, 3).map((interest, index) => (
-                <Badge
-                  key={index}
-                  variant="secondary"
-                  className="text-xs bg-purple-100 text-purple-800"
-                >
-                  {interest}
-                </Badge>
+                <Badge key={index}>{interest}</Badge>
               ))}
               {profile.interests && profile.interests.length > 3 && (
-                <Badge
-                  variant="secondary"
-                  className="text-xs bg-purple-100 text-purple-800"
-                >
-                  +{profile.interests.length - 3} more
-                </Badge>
+                <Badge>+{profile.interests.length - 3} more</Badge>
               )}
             </div>
           </div>
@@ -140,19 +129,12 @@ export const SummaryCard = ({ profile }: SummaryCardProps) => {
             <div className="text-sm font-medium text-purple-800">Goals:</div>
             <div className="flex flex-wrap gap-2">
               {profile.goals?.slice(0, 2).map((goal, index) => (
-                <Badge
-                  key={index}
-                  variant="outline"
-                  className="text-xs border-purple-300 text-purple-700"
-                >
+                <Badge key={index} variant="secondary">
                   {goal}
                 </Badge>
               ))}
               {profile.goals && profile.goals.length > 2 && (
-                <Badge
-                  variant="outline"
-                  className="text-xs border-purple-300 text-purple-700"
-                >
+                <Badge variant="secondary">
                   +{profile.goals.length - 2} more
                 </Badge>
               )}

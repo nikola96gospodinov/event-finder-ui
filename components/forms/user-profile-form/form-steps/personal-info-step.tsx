@@ -95,7 +95,7 @@ export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
                   <FormControl>
                     <Button
                       variant="outline"
-                      className="w-full justify-between font-normal border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300"
+                      className="w-full justify-between font-normal border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300 text-foreground"
                     >
                       {field.value
                         ? new Date(field.value).toLocaleDateString()
