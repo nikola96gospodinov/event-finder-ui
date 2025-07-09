@@ -155,7 +155,15 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
               <p className="text-gray-700">
                 {formData.acceptable_times.weekdays.allDay
                   ? "Available at all times"
-                  : `${formData.acceptable_times.weekdays.startTime} - ${formData.acceptable_times.weekdays.endTime}`}
+                  : `${
+                      formData.acceptable_times.weekdays.startTime
+                        ? `from ${formData.acceptable_times.weekdays.startTime}`
+                        : ""
+                    } ${
+                      formData.acceptable_times.weekdays.endTime
+                        ? `until ${formData.acceptable_times.weekdays.endTime}`
+                        : ""
+                    }`}
               </p>
             </div>
             <div>
@@ -163,7 +171,15 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
               <p className="text-gray-700">
                 {formData.acceptable_times.weekends.allDay
                   ? "Available at all times"
-                  : `${formData.acceptable_times.weekends.startTime} - ${formData.acceptable_times.weekends.endTime}`}
+                  : `${
+                      formData.acceptable_times.weekends.startTime
+                        ? `from ${formData.acceptable_times.weekends.startTime}`
+                        : ""
+                    } ${
+                      formData.acceptable_times.weekends.endTime
+                        ? `until ${formData.acceptable_times.weekends.endTime}`
+                        : ""
+                    }`}
               </p>
             </div>
           </div>
@@ -178,7 +194,7 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
                 <Badge
                   key={index}
                   variant="secondary"
-                  className="bg-rose-100 text-rose-700"
+                  className="bg-white text-rose-700 border-rose-300"
                 >
                   {interest}
                 </Badge>
@@ -193,7 +209,7 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
                 <Badge
                   key={index}
                   variant="secondary"
-                  className="bg-pink-100 text-pink-700"
+                  className="bg-white text-pink-700 border-pink-300"
                 >
                   {goal}
                 </Badge>
