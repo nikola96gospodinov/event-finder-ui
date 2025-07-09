@@ -48,12 +48,7 @@ const AuthActions = () => {
   if (!user) {
     return (
       <Link href="/auth">
-        <Button
-          variant="outline"
-          className="border-purple-300 text-purple-600 hover:bg-purple-50"
-        >
-          Sign In
-        </Button>
+        <Button variant="outline">Sign In</Button>
       </Link>
     );
   }

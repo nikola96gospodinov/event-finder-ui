@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRunAgent } from "@/services/agent/run-agent.service";
-import { Play, CheckCircle, ArrowRight, Clock3 } from "lucide-react";
+import { Play, CheckCircle, Clock3 } from "lucide-react";
 
 export const AgentControlCard = () => {
   const [onlyHighlyRelevant, setOnlyHighlyRelevant] = useState(true);
@@ -104,12 +104,11 @@ export const AgentControlCard = () => {
               <Button
                 onClick={handleRunAgent}
                 disabled={isRunning}
-                className="w-full h-14 text-xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white transition-all duration-300 hover:scale-105 shadow-lg"
-                size="lg"
+                className="text-xl shadow-lg"
+                size="full"
               >
                 <Play className="mr-3 h-6 w-6" />
                 Start Event Search
-                <ArrowRight className="ml-3 h-6 w-6" />
               </Button>
             </>
           )}

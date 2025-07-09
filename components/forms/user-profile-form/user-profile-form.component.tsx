@@ -184,17 +184,13 @@ const FormContent = ({
           onClick={prevStep}
           disabled={currentStep === 0}
           variant="outline"
-          className="flex items-center gap-2 border-2 border-purple-300 text-purple-600 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
         >
           <ChevronLeft className="h-5 w-5" />
           Previous
         </Button>
 
         {currentStep < totalSteps - 1 && (
-          <Button
-            onClick={nextStep}
-            className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
-          >
+          <Button onClick={nextStep}>
             Next
             <ChevronRight className="h-5 w-5" />
           </Button>

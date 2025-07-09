@@ -205,7 +205,8 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
 
       <Button
         onClick={handleSubmit(onSubmit)}
-        className="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 text-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+        size="full"
+        className="text-lg"
         disabled={isPending}
       >
         {isPending ? "Saving..." : "🚀 Save My Profile"}
