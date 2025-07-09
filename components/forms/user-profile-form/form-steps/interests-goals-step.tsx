@@ -120,7 +120,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
               <Badge
                 key={index}
                 variant="secondary"
-                className="cursor-pointer bg-blue-100 text-blue-700 hover:bg-blue-200 transition-all duration-200 hover:scale-105"
+                className="cursor-pointer bg-white text-blue-700 hover:bg-blue-100 transition-all duration-200 hover:scale-105 border-blue-300"
                 onClick={() => removeGoal(index)}
               >
                 {goal} ×
@@ -172,7 +172,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
               <Badge
                 key={index}
                 variant="secondary"
-                className="cursor-pointer bg-green-100 text-green-700 hover:bg-green-200 transition-all duration-200 hover:scale-105"
+                className="cursor-pointer bg-white text-green-700 hover:bg-green-100 transition-all duration-200 hover:scale-105 border-green-300"
                 onClick={() => removeInterest(index)}
               >
                 {interest} ×
