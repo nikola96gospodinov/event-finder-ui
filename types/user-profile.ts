@@ -76,7 +76,6 @@ export const BudgetSchema = z.object({
 });
 export type Budget = z.infer<typeof BudgetSchema>;
 
-// Step 5: Availability & Time
 const acceptableTimesSchema = z
   .object({
     startTime: z.string().optional(),
@@ -102,6 +101,7 @@ const acceptableTimesSchema = z
     }
   });
 
+// Step 5: Availability & Time
 export const AvailabilitySchema = z.object({
   time_commitment_in_minutes: z.number({
     errorMap: () => ({ message: "Please select your time commitment" }),
