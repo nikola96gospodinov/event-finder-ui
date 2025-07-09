@@ -2,9 +2,17 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, User, LogOut } from "lucide-react";
 import { useFetchUser } from "@/services/auth/fetch-user";
+import { useSignOut } from "@/services/auth/sign-out.service";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
   return (
@@ -30,6 +38,8 @@ export const Header = () => {
 
 const AuthActions = () => {
   const { data: user, isLoading: isUserLoading } = useFetchUser();
+  const { mutate: signOut, isPending: isSigningOut } = useSignOut();
+  const router = useRouter();
 
   if (isUserLoading) {
     return <Spinner size={8} />;
@@ -50,15 +60,44 @@ const AuthActions = () => {
 
   const userInitial = user.email ? user.email.charAt(0).toUpperCase() : "U";
 
+  const handleSignOut = () => {
+    signOut(undefined, {
+      onSuccess: () => {
+        router.push("/");
+      },
+    });
+  };
+
   return (
     <div className="flex items-center gap-3">
       <div className="flex items-center gap-3">
         <div className="relative group">
-          <Link href="/profile">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-semibold text-lg cursor-pointer hover:shadow-lg transition-all duration-300">
-              {userInitial}
-            </div>
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white font-semibold text-lg cursor-pointer hover:shadow-lg transition-all duration-300">
+                {userInitial}
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-36" align="center">
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-2 text-purple-600 hover:bg-purple-50"
+                >
+                  <User className="h-4 w-4" />
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex items-center gap-2 text-red-600 hover:bg-red-50"
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+              >
+                <LogOut className="h-4 w-4" />
+                {isSigningOut ? "Signing out..." : "Sign out"}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div className="absolute right-0 top-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
         </div>
       </div>
