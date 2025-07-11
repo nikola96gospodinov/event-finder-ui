@@ -76,13 +76,11 @@ const OutOfRunsState = ({ maxRuns }: { maxRuns: number }) => (
 const MainFormState = ({
   onlyHighlyRelevant,
   setOnlyHighlyRelevant,
-  runsLeft,
   isRunning,
   onRunAgent,
 }: {
   onlyHighlyRelevant: boolean;
   setOnlyHighlyRelevant: (value: boolean) => void;
-  runsLeft: number;
   isRunning: boolean;
   onRunAgent: () => void;
 }) => (
@@ -116,30 +114,22 @@ const MainFormState = ({
       </h4>
       <ul className="text-sm text-purple-800 space-y-2">
         <li className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+          <div className="w-1 h-1 bg-purple-600 rounded-full"></div>
           Our AI analyzes your profile and preferences
         </li>
         <li className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+          <div className="w-1 h-1 bg-purple-600 rounded-full"></div>
           Searches for events in your area within your budget
         </li>
         <li className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+          <div className="w-1 h-1 bg-purple-600 rounded-full"></div>
           Filters based on your availability and interests
         </li>
         <li className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+          <div className="w-1 h-1 bg-purple-600 rounded-full"></div>
           Sends personalized recommendations to your email
         </li>
       </ul>
-    </div>
-
-    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-      <div className="flex items-center gap-2 text-green-800">
-        <span className="text-sm font-medium">
-          Runs remaining this month: {runsLeft}
-        </span>
-      </div>
     </div>
 
     <Button
@@ -180,7 +170,6 @@ export const AgentControlCard = ({ runs }: AgentControlCardProps) => {
       <MainFormState
         onlyHighlyRelevant={onlyHighlyRelevant}
         setOnlyHighlyRelevant={setOnlyHighlyRelevant}
-        runsLeft={runsLeft}
         isRunning={isRunning}
         onRunAgent={handleRunAgent}
       />
