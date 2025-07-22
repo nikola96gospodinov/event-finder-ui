@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
-import { useFetchUser } from "@/services/auth/fetch-user";
+import { useFetchUser } from "@/services/auth/fetch-user.service";
 
 export const CTASection = () => {
   const { data: user } = useFetchUser();

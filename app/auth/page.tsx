@@ -3,7 +3,7 @@
 import { AuthForm } from "@/components/forms/auth-form.component";
 import { useEffect, Suspense } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { useFetchUser } from "@/services/auth/fetch-user";
+import { useFetchUser } from "@/services/auth/fetch-user.service";
 import { Spinner } from "@/components/ui/spinner";
 
 function AuthPageContent() {

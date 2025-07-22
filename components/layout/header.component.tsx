@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sparkles, User, LogOut } from "lucide-react";
-import { useFetchUser } from "@/services/auth/fetch-user";
+import { useFetchUser } from "@/services/auth/fetch-user.service";
 import { useSignOut } from "@/services/auth/sign-out.service";
 import { Spinner } from "@/components/ui/spinner";
 import {

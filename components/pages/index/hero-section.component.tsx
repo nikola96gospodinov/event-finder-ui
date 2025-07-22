@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sparkles, PlayIcon } from "lucide-react";
-import { useFetchUser } from "@/services/auth/fetch-user";
+import { useFetchUser } from "@/services/auth/fetch-user.service";
 
 export const HeroSection = () => {
   const { data: user } = useFetchUser();

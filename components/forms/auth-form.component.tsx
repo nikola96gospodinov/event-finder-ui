@@ -23,7 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
-import { useRegister } from "@/services/auth/register";
+import { useRegister } from "@/services/auth/register.service";
 import { useLogin } from "@/services/auth/sign-in.service";
 
 const authSchema = z.object({

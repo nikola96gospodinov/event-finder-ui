@@ -2,7 +2,7 @@
 
 import { UserProfileForm } from "@/components/forms/user-profile-form/user-profile-form.component";
 import { Spinner } from "@/components/ui/spinner";
-import { useFetchUser } from "@/services/auth/fetch-user";
+import { useFetchUser } from "@/services/auth/fetch-user.service";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 

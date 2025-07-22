@@ -1,7 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
-
-const FETCH_USER_QUERY_KEY = ["user"];
+import { FETCH_USER_QUERY_KEY } from "./auth.keys";
 
 const fetchUser = async () => {
   const {

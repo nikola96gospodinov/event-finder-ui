@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
-import { useFetchUser } from "@/services/auth/fetch-user";
+import { useFetchUser } from "@/services/auth/fetch-user.service";
 import { useFetchProfile } from "@/services/profile/fetch-profile.service";
 import { useFetchRunsSinceStartOfMonth } from "@/services/runs/fetch-runs-since-start-of-month.service";
 import { Header, SummaryCard, AgentControlCard } from "@/components/pages/run";
