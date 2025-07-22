@@ -22,8 +22,8 @@ export const Header = () => {
           <Link href="/">
             <div className="flex items-center gap-3">
               <Sparkles className="h-8 w-8 text-purple-600" />
-              <span className="text-2xl font-bold text-purple-900">
-                EventFinder
+              <span className="text-3xl bg-gradient-to-r font-bold from-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wide">
+                All<span className="text-pink-600 font-light">ivents</span>
               </span>
             </div>
           </Link>
