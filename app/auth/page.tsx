@@ -1,12 +1,12 @@
 "use client";
 
 import { AuthForm } from "@/components/forms/auth-form.component";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useFetchUser } from "@/services/auth/fetch-user";
 import { Spinner } from "@/components/ui/spinner";
 
-export default function AuthPage() {
+function AuthPageContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -36,4 +36,18 @@ export default function AuthPage() {
   }
 
   return <AuthForm />;
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-screen">
+          <Spinner />
+        </div>
+      }
+    >
+      <AuthPageContent />
+    </Suspense>
+  );
 }
