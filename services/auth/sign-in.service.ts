@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FETCH_USER_QUERY_KEY } from "./auth.keys";
 
 export type LogInProps = {
   email: string;
@@ -21,7 +22,13 @@ const login = async (credentials: LogInProps) => {
 };
 
 export const useLogin = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: login,
+    onSuccess: () => {
+      // Force an immediate refetch to trigger re-render
+      queryClient.refetchQueries({ queryKey: FETCH_USER_QUERY_KEY });
+    },
   });
 };

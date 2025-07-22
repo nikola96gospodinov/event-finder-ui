@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FETCH_USER_QUERY_KEY } from "./auth.keys";
 
 export type RegisterProps = {
   email: string;
@@ -21,7 +22,12 @@ const register = async (credentials: RegisterProps) => {
 };
 
 export const useRegister = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: register,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: FETCH_USER_QUERY_KEY });
+    },
   });
 };

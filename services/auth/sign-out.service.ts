@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FETCH_USER_QUERY_KEY } from "./auth.keys";
 
 const signOut = async () => {
   const { error } = await supabase.auth.signOut();
@@ -13,7 +14,12 @@ const signOut = async () => {
 };
 
 export const useSignOut = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: signOut,
+    onSuccess: () => {
+      queryClient.setQueryData(FETCH_USER_QUERY_KEY, null);
+    },
   });
 };
