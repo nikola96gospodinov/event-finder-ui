@@ -88,7 +88,7 @@ export const AuthForm = () => {
   const isLoading = form.formState.isSubmitting || isLoggingIn || isRegistering;
 
   return (
-    <div className="max-w-xl mx-auto p-16">
+    <div className="max-w-xl mx-auto p-2 md:p-16">
       <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
           <CardTitle className="text-3xl font-bold flex items-center justify-center gap-3">

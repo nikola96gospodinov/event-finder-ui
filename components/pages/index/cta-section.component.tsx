@@ -11,19 +11,20 @@ import {
 } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { useFetchUser } from "@/services/auth/fetch-user.service";
+import { Section } from "@/components/layout/section";
 
 export const CTASection = () => {
   const { data: user } = useFetchUser();
 
   return (
-    <section className="pb-20 pt-10 px-4">
+    <Section className="py-4 md:py-20">
       <div className="max-w-4xl mx-auto text-center">
-        <Card className="shadow-2xl border-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
+        <Card className="shadow-2xl border-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 md:p-6">
           <CardHeader className="text-center">
-            <CardTitle className="text-4xl font-bold">
+            <CardTitle className="text-2xl md:text-4xl font-bold">
               Ready to Discover Amazing Events?
             </CardTitle>
-            <CardDescription className="text-purple-100 text-xl">
+            <CardDescription className="text-purple-50 text-lg md:text-xl">
               Join the pioneers of AI-powered event discovery
             </CardDescription>
           </CardHeader>
@@ -37,6 +38,6 @@ export const CTASection = () => {
           </CardContent>
         </Card>
       </div>
-    </section>
+    </Section>
   );
 };

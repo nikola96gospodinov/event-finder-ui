@@ -1,14 +1,16 @@
+import { LogoText } from "@/components/branding/logo";
+import { Section } from "@/components/layout/section";
 import { Heart, CheckCircle, Calendar, MapPin } from "lucide-react";
 
 export const FeaturesSection = () => {
   return (
-    <section className="py-20 px-4">
+    <Section>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-purple-900 mb-4">
-            Why Choose EventFinder?
+          <h2 className="text-3xl md:text-4xl font-bold text-purple-900 mb-2 md:mb-4">
+            Why <LogoText className="text-3xl md:text-4xl" />?
           </h2>
-          <p className="text-xl text-purple-800 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-purple-800 max-w-2xl mx-auto">
             Stop wasting time on generic event listings. Get events that
             actually matter to you.
           </p>
@@ -64,6 +66,6 @@ export const FeaturesSection = () => {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sparkles, User, LogOut } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { useFetchUser } from "@/services/auth/fetch-user.service";
 import { useSignOut } from "@/services/auth/sign-out.service";
 import { Spinner } from "@/components/ui/spinner";
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { Logo } from "@/components/branding/logo";
 
 export const Header = () => {
   return (
@@ -20,12 +21,7 @@ export const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <Link href="/">
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-8 w-8 text-purple-600" />
-              <span className="text-3xl bg-gradient-to-r font-bold from-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wide">
-                All<span className="text-pink-600 font-light">ivents</span>
-              </span>
-            </div>
+            <Logo />
           </Link>
           <div className="flex items-center gap-4">
             <AuthActions />
