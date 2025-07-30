@@ -135,7 +135,7 @@ const MainFormState = ({
     <Button
       onClick={onRunAgent}
       disabled={isRunning}
-      className="text-xl shadow-lg"
+      className="text-md md:text-xl shadow-lg"
       size="full"
     >
       <Play className="mr-3 h-6 w-6" />
@@ -177,14 +177,14 @@ export const AgentControlCard = ({ runs }: AgentControlCardProps) => {
   };
 
   return (
-    <div className="lg:col-span-2">
+    <div className="lg:col-span-2 order-1 lg:order-2">
       <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
-          <CardTitle className="text-3xl font-bold flex items-center justify-center gap-3">
+          <CardTitle className="text-2xl md:text-3xl font-bold flex items-center justify-center gap-3">
             <Play className="h-8 w-8" />
             Start Event Search
           </CardTitle>
-          <CardDescription className="text-purple-50 text-lg font-semibold">
+          <CardDescription className="text-purple-50 text-md md:text-lg font-semibold">
             Our AI agent will analyze your profile and find the best events for
             you. Results will be sent to your email.
           </CardDescription>

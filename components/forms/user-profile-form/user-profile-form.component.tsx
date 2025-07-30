@@ -48,31 +48,31 @@ export const UserProfileForm = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-16">
+    <div className="max-w-5xl mx-auto p-2 md:p-16">
       <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
-          <CardTitle className="text-4xl font-bold flex items-center justify-center gap-3">
+          <CardTitle className="text-3xl md:text-4xl font-bold flex items-center justify-center gap-3">
             <Sparkles className="h-8 w-8" />
             Profile Builder
             <Sparkles className="h-8 w-8" />
           </CardTitle>
-          <CardDescription className="text-purple-50 text-lg font-semibold">
+          <CardDescription className="text-purple-50 text-md md:text-lg font-semibold">
             The more we know about you the more accurate recommendations we can
             make.
           </CardDescription>
           <div className="mt-6">
             <Progress
               value={progress}
-              className="w-full h-3 bg-white/20"
+              className="w-full h-2 md:h-3 bg-white/20"
               indicatorClassName="bg-purple-50"
             />
-            <p className="text-sm text-purple-50 mt-3 font-semibold">
+            <p className="text-xs md:text-sm text-purple-50 mt-3 font-semibold">
               Step {currentStep + 1} of {totalSteps} Complete
             </p>
           </div>
         </CardHeader>
 
-        <CardContent className="p-8">
+        <CardContent className="p-6 md:p-8">
           <FormContent
             currentStep={currentStep}
             profile={profile}

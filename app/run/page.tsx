@@ -33,9 +33,9 @@ export default function RunPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-16">
+    <div className="max-w-5xl mx-auto p-2 md:p-16">
       <Header />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-8">
         <SummaryCard profile={profile} runs={runs || []} />
         <AgentControlCard runs={runs || []} />
       </div>

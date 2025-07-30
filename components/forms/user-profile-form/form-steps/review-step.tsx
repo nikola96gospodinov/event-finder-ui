@@ -30,11 +30,11 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
       <div className="text-center mb-8 relative">
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-rose-500 to-pink-500 rounded-full blur-lg opacity-30 animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-rose-500 to-pink-500 p-4 rounded-full">
-            <Calendar className="h-12 w-12 text-white" />
+          <div className="relative bg-gradient-to-r from-rose-500 to-pink-500 p-3 md:p-4 rounded-full">
+            <Calendar className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mt-2 md:mt-4">
           Review & Submit
         </h2>
         <p className="text-muted-foreground">
@@ -42,8 +42,8 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
         </p>
       </div>
 
-      <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-8 rounded-xl border-2 border-rose-200">
-        <h3 className="text-2xl font-bold text-rose-700 mb-6 flex items-center gap-2">
+      <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-6 md:p-8 rounded-xl border-2 border-rose-200">
+        <h3 className="text-2xl font-bold text-rose-700 mb-4 md:mb-6 flex items-center gap-2">
           <Star className="h-6 w-6" />
           Profile Summary
         </h3>
@@ -222,7 +222,7 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
       <Button
         onClick={handleSubmit(onSubmit)}
         size="full"
-        className="text-lg"
+        className="text-md md:text-lg"
         disabled={isPending}
       >
         {isPending ? "Saving..." : "🚀 Save My Profile"}

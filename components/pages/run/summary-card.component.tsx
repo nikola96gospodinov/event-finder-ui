@@ -47,7 +47,7 @@ export const SummaryCard = ({ profile, runs }: SummaryCardProps) => {
   const isOutOfRuns = runsLeft <= 0;
 
   return (
-    <div className="lg:col-span-1">
+    <div className="lg:col-span-1 order-2 lg:order-1">
       <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm h-fit">
         <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
           <CardTitle className="text-xl font-bold flex items-center justify-center gap-2">

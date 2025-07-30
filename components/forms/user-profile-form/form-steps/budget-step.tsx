@@ -41,11 +41,11 @@ export const BudgetStep = ({ form }: BudgetStepProps) => {
       <div className="text-center mb-8 relative">
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full blur-lg opacity-30 animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-emerald-500 to-teal-500 p-4 rounded-full">
-            <DollarSign className="h-12 w-12 text-white" />
+          <div className="relative bg-gradient-to-r from-emerald-500 to-teal-500 p-3 md:p-4 rounded-full">
+            <DollarSign className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent mt-2 md:mt-4">
           Event Budget & Format
         </h2>
         <p className="text-muted-foreground">
@@ -54,13 +54,13 @@ export const BudgetStep = ({ form }: BudgetStepProps) => {
       </div>
 
       <div className="space-y-6">
-        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border border-emerald-200">
+        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 md:p-6 rounded-xl border border-emerald-200">
           <FormField
             control={form.control}
             name="budget"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg font-semibold text-emerald-700 mb-4 block">
+                <FormLabel className="text-md md:text-lg font-semibold text-emerald-700 mb-4 block">
                   💰 Do you have a budget in mind for events?
                 </FormLabel>
                 <Select
@@ -86,7 +86,7 @@ export const BudgetStep = ({ form }: BudgetStepProps) => {
           />
         </div>
 
-        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-200">
+        <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-4 md:p-6 rounded-xl border border-teal-200">
           <FormField
             control={form.control}
             name="willingness_for_online"
@@ -96,10 +96,10 @@ export const BudgetStep = ({ form }: BudgetStepProps) => {
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    className="border-2 border-teal-300 data-[state=checked]:bg-teal-500 data-[state=checked]:border-teal-600 data-[state=checked]:text-white w-5 h-5 flex items-center justify-center"
+                    className="border-2 border-teal-300 data-[state=checked]:bg-teal-500 data-[state=checked]:border-teal-600 data-[state=checked]:text-white w-4 h-4 md:w-5 md:h-5 flex items-center justify-center"
                   />
                 </FormControl>
-                <FormLabel className="text-md font-medium text-teal-700 m-0 p-0 leading-none">
+                <FormLabel className="text-md font-medium text-teal-700 m-0 p-0 leading-none leading-5">
                   💻 I&apos;m open to attending virtual/online events
                 </FormLabel>
                 <FormMessage />

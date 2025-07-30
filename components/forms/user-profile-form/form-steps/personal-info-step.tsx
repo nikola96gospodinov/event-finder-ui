@@ -69,11 +69,11 @@ export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
       <div className="text-center mb-8 relative">
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-purple-600 to-pink-600 p-4 rounded-full">
-            <User className="h-12 w-12 text-white" />
+          <div className="relative bg-gradient-to-r from-purple-600 to-pink-600 p-3 md:p-4 rounded-full">
+            <User className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mt-2 md:mt-4">
           Personal Information
         </h2>
         <p className="text-muted-foreground">

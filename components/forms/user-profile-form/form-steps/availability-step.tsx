@@ -40,11 +40,11 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
       <div className="text-center mb-8 relative">
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-500 rounded-full blur-lg opacity-30 animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-violet-500 to-purple-500 p-4 rounded-full">
-            <Clock className="h-12 w-12 text-white" />
+          <div className="relative bg-gradient-to-r from-violet-500 to-purple-500 p-3 md:p-4 rounded-full">
+            <Clock className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent mt-2 md:mt-4">
           Time & Availability
         </h2>
         <p className="text-muted-foreground">
@@ -53,13 +53,13 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
       </div>
 
       <div className="space-y-6">
-        <div className="bg-gradient-to-br from-violet-50 to-purple-50 p-6 rounded-xl border border-violet-200">
+        <div className="bg-gradient-to-br from-violet-50 to-purple-50 p-4 md:p-6 rounded-xl border border-violet-200">
           <FormField
             control={form.control}
             name="time_commitment_in_minutes"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg font-semibold text-violet-700 flex items-center gap-2">
+                <FormLabel className="text-md md:text-lg font-semibold text-violet-700 flex items-center gap-2">
                   ⏱️ How much time can you commit per event?
                 </FormLabel>
                 <Select
@@ -85,8 +85,8 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
           />
         </div>
 
-        <div className="bg-white p-6 rounded-xl border-2 border-violet-200">
-          <h3 className="text-xl font-bold text-violet-700 mb-6">
+        <div className="bg-white p-4 md:p-6 rounded-xl border-2 border-violet-200">
+          <h3 className="text-md md:text-xl font-bold text-violet-700 mb-4 md:mb-6">
             🗓️ When are you typically available?
           </h3>
           <div className="space-y-4">
@@ -161,7 +161,7 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                     control={form.control}
                     name={`acceptable_times.${day}.allDay`}
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormItem className="flex flex-row center space-x-1 space-y-0">
                         <FormControl>
                           <Checkbox
                             checked={field.value}
@@ -172,11 +172,9 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                             className="border-2 border-violet-300"
                           />
                         </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-violet-700">
-                            I am available at all times
-                          </FormLabel>
-                        </div>
+                        <FormLabel className="text-violet-700">
+                          I am available at all times
+                        </FormLabel>
                         <FormMessage />
                       </FormItem>
                     )}

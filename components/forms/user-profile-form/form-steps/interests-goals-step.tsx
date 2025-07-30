@@ -65,18 +65,18 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
       <div className="text-center mb-8 relative">
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 rounded-full blur-lg opacity-30 animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-green-500 to-blue-500 p-4 rounded-full">
-            <Target className="h-12 w-12 text-white" />
+          <div className="relative bg-gradient-to-r from-green-500 to-blue-500 p-3 md:p-4 rounded-full">
+            <Target className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent mt-2 md:mt-4">
           Interests & Goals
         </h2>
         <p className="text-muted-foreground">What drives you? 🎯</p>
       </div>
 
       <div className="space-y-8">
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 md:p-6 rounded-xl border border-blue-200">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-blue-700 mb-1">
               🎯 Goals
@@ -110,7 +110,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
             <Button
               onClick={addGoal}
               variant="outline"
-              className="border-blue-300 text-blue-700 hover:bg-blue-100"
+              className="border-blue-300 text-blue-700 hover:bg-white"
             >
               Add 🎯
             </Button>
@@ -129,7 +129,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 to-blue-50 p-6 rounded-xl border border-green-200">
+        <div className="bg-gradient-to-br from-green-50 to-blue-50 p-4 md:p-6 rounded-xl border border-green-200">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-green-700 mb-1">
               ✨ Interests
@@ -162,7 +162,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
             <Button
               onClick={addInterest}
               variant="outline"
-              className="border-green-300 text-green-700 hover:bg-green-100"
+              className="border-green-300 text-green-700 hover:bg-white"
             >
               Add ✨
             </Button>
