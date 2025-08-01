@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Bot } from "lucide-react";
 import { useFetchUser } from "@/services/auth/fetch-user.service";
 import { useSignOut } from "@/services/auth/sign-out.service";
 import { Spinner } from "@/components/ui/spinner";
@@ -70,6 +70,15 @@ const AuthActions = () => {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-36" align="center">
+              <DropdownMenuItem>
+                <Link
+                  href="/run"
+                  className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-md"
+                >
+                  <Bot className="h-4 w-4 text-white" />
+                  Run Agent
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
                   href="/profile"
