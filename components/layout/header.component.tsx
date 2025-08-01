@@ -24,7 +24,7 @@ export const Header = () => {
             <Logo />
           </Link>
           <div className="flex items-center gap-4">
-            <AuthActions />
+            <ProfileActions />
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@ export const Header = () => {
   );
 };
 
-const AuthActions = () => {
+const ProfileActions = () => {
   const { data: user, isLoading: isUserLoading } = useFetchUser();
   const { mutate: signOut, isPending: isSigningOut } = useSignOut();
   const router = useRouter();
