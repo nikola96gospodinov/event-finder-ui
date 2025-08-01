@@ -20,7 +20,7 @@ const runAgent = async ({ onlyHighlyRelevant }: Props) => {
   }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/v1/external/run-agent?only_highly_relevant=${onlyHighlyRelevant}`,
+    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/api/v1/external/run-agent?only_highly_relevant=${onlyHighlyRelevant}`,
     {
       method: "POST",
       headers: {
