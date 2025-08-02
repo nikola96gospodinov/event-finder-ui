@@ -8,6 +8,7 @@ import { Calendar, Star, Clock, Heart, Users } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
 import { useSaveProfile } from "@/services/profile/save-profile.service";
 import { useRouter } from "next/navigation";
+import { getCurrentAge } from "@/utils/dates.utils";
 
 type ReviewStepProps = {
   form: UseFormReturn<UserProfile>;
@@ -34,7 +35,7 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
             <Calendar className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mt-2 md:mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mt-2 md:mt-4 mb-1 md:mb-2">
           Review & Submit
         </h2>
         <p className="text-muted-foreground">
@@ -58,7 +59,9 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
             <div className="space-y-2">
               <p className="flex items-center gap-2">
                 <span className="font-semibold text-rose-600">🎂 Age:</span>
-                <span className="text-gray-700">{formData.birthday}</span>
+                <span className="text-gray-700">
+                  {getCurrentAge(formData.birthday)}
+                </span>
               </p>
               <p className="flex items-center gap-2">
                 <span className="font-semibold text-rose-600">
@@ -125,7 +128,9 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
                   ⏰ Time Commitment:
                 </span>
                 <span className="text-gray-700">
-                  {formData.time_commitment_in_minutes} minutes
+                  {formData.time_commitment_in_minutes / 60 > 6
+                    ? "More than 6 hours"
+                    : `Up to ${formData.time_commitment_in_minutes / 60} hours`}
                 </span>
               </p>
             </div>

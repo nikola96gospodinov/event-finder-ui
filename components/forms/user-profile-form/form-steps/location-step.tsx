@@ -39,10 +39,12 @@ export const LocationStep = ({ form }: LocationStepProps) => {
             <MapPin className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mt-2 md:mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mt-2 md:mt-4 mb-1 md:mb-2">
           Location & Distance
         </h2>
-        <p className="text-muted-foreground">Where in the world are you? 🌍</p>
+        <p className="text-muted-foreground">
+          Let&apos;s find events around you 📍
+        </p>
       </div>
 
       <div className="bg-gradient-to-br from-orange-50 to-red-50 p-4 md:p-6 rounded-xl border border-orange-200">
@@ -52,7 +54,12 @@ export const LocationStep = ({ form }: LocationStepProps) => {
             name="postcode"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-medium flex items-center gap-2">
+                <FormLabel
+                  className="text-sm font-medium flex items-center gap-1"
+                  includeExplanationTooltip
+                  explanation="We use your postcode to find events around you"
+                  tooltipIconClassNames="text-orange-700 mb-0.25"
+                >
                   📮 Postcode
                 </FormLabel>
                 <FormControl>
@@ -70,7 +77,35 @@ export const LocationStep = ({ form }: LocationStepProps) => {
       </div>
 
       <div className="bg-white p-4 md:p-6 rounded-xl border-2 border-orange-200">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-md md:text-lg font-semibold text-orange-700 mb-2 block">
+            How far are you willing to travel for an event? 🚗
+          </span>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="distance_threshold.value"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium flex items-center gap-2">
+                  🏠 Distance
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={1}
+                    className="border-2 border-orange-200 focus:border-orange-500"
+                    placeholder="20"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="distance_threshold.unit"
@@ -93,27 +128,6 @@ export const LocationStep = ({ form }: LocationStepProps) => {
                     ))}
                   </SelectContent>
                 </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="distance_threshold.value"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-sm font-medium flex items-center gap-2">
-                  🏠 Distance Threshold
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    min={0}
-                    className="border-2 border-orange-200 focus:border-orange-500"
-                    {...field}
-                  />
-                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

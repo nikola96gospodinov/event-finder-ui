@@ -22,13 +22,13 @@ import { UserProfile } from "@/types/user-profile";
 
 const budgetOptions = [
   { value: "0", label: "Free events only ($0) 🆓" },
-  { value: "10", label: "Up to $10 per event 💵" },
-  { value: "20", label: "Up to $20 per event 🌱" },
-  { value: "50", label: "Up to $50 per event ⭐" },
-  { value: "100", label: "Up to $100 per event 💎" },
-  { value: "200", label: "Up to $200 per event 🏆" },
-  { value: "500", label: "Up to $500 per event 👑" },
-  { value: "1000", label: "Premium events ($1000+) 🌟" },
+  { value: "10", label: "Up to £10 per event 💵" },
+  { value: "20", label: "Up to £20 per event 🌱" },
+  { value: "50", label: "Up to £50 per event ⭐" },
+  { value: "100", label: "Up to £100 per event 💎" },
+  { value: "200", label: "Up to £200 per event 🏆" },
+  { value: "500", label: "Up to £500 per event 👑" },
+  { value: "1000", label: "Premium events (£1000+) 🌟" },
 ];
 
 type BudgetStepProps = {
@@ -45,7 +45,7 @@ export const BudgetStep = ({ form }: BudgetStepProps) => {
             <DollarSign className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent mt-2 md:mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent mt-2 md:mt-4 mb-1 md:mb-2">
           Event Budget & Format
         </h2>
         <p className="text-muted-foreground">

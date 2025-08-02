@@ -44,7 +44,7 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
             <Clock className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent mt-2 md:mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent mt-2 md:mt-4 mb-1 md:mb-2">
           Time & Availability
         </h2>
         <p className="text-muted-foreground">
@@ -104,7 +104,7 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                     name={`acceptable_times.${day}.startTime`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Start Time</FormLabel>
+                        <FormLabel>From</FormLabel>
                         <FormControl>
                           <Input
                             type="time"
@@ -131,7 +131,7 @@ export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
                     name={`acceptable_times.${day}.endTime`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>End Time</FormLabel>
+                        <FormLabel>Until</FormLabel>
                         <FormControl>
                           <Input
                             type="time"

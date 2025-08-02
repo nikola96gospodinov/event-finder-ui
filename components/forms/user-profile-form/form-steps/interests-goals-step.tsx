@@ -13,6 +13,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { ExplanationTooltip } from "@/components/reusables/explanation-tooltip";
 
 type InterestsGoalsStepProps = {
   form: UseFormReturn<UserProfile>;
@@ -69,7 +70,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
             <Target className="h-8 w-8 md:h-12 md:w-12 text-white" />
           </div>
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent mt-2 md:mt-4">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent mt-2 md:mt-4 mb-1 md:mb-2">
           Interests & Goals
         </h2>
         <p className="text-muted-foreground">What drives you? 🎯</p>
@@ -78,9 +79,15 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
       <div className="space-y-8">
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 md:p-6 rounded-xl border border-blue-200">
           <div className="mb-4">
-            <h3 className="text-lg font-semibold text-blue-700 mb-1">
-              🎯 Goals
-            </h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-blue-700 mb-1">
+                🎯 Goals
+              </h3>
+              <ExplanationTooltip
+                explanation="Typically between 1 and 5. The more specific your goals are the more tailored your recommendations will be."
+                iconClassNames="text-blue-700 mb-0.5"
+              />
+            </div>
             <p className="text-sm text-muted-foreground">
               e.g. learn Spanish, make new friends, find a business partner,
               date around
@@ -98,7 +105,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
                         value={tempGoal}
                         onChange={(e) => setTempGoal(e.target.value)}
                         placeholder="Enter a goal"
-                        onKeyPress={(e) => e.key === "Enter" && addGoal()}
+                        onKeyDown={(e) => e.key === "Enter" && addGoal()}
                         className="border-2 border-blue-200 focus:border-blue-500"
                       />
                     </FormControl>
@@ -131,9 +138,15 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
 
         <div className="bg-gradient-to-br from-green-50 to-blue-50 p-4 md:p-6 rounded-xl border border-green-200">
           <div className="mb-4">
-            <h3 className="text-lg font-semibold text-green-700 mb-1">
-              ✨ Interests
-            </h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-green-700 mb-1">
+                ✨ Interests
+              </h3>
+              <ExplanationTooltip
+                explanation="Typically between 5 and 15. The more interests you add the more varied your recommendations will be."
+                iconClassNames="text-green-700 mb-0.5"
+              />
+            </div>
             <p className="text-sm text-muted-foreground">
               e.g. photography, hiking, Formula 1, coffee, board games
             </p>
@@ -150,7 +163,7 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
                         value={tempInterest}
                         onChange={(e) => setTempInterest(e.target.value)}
                         placeholder="Enter an interest"
-                        onKeyPress={(e) => e.key === "Enter" && addInterest()}
+                        onKeyDown={(e) => e.key === "Enter" && addInterest()}
                         className="border-2 border-green-200 focus:border-green-500"
                       />
                     </FormControl>
