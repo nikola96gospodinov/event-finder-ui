@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EventFinder",
+  title: "Allivents",
   description: "Let AI find the perfect events for you",
 };
 
