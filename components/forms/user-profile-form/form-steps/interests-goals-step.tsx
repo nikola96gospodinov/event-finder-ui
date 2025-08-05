@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ExplanationTooltip } from "@/components/reusables/explanation-tooltip";
+import { InterestSuggestions } from "./interest-suggestions.component";
 
 type InterestsGoalsStepProps = {
   form: UseFormReturn<UserProfile>;
@@ -26,11 +27,12 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
   const [tempInterest, setTempInterest] = useState("");
   const [tempGoal, setTempGoal] = useState("");
 
-  const addInterest = () => {
-    if (tempInterest.trim()) {
+  const addInterest = (interest?: string) => {
+    const interestToAdd = interest || tempInterest;
+    if (interestToAdd.trim()) {
       setValue("interests", [
         ...(formData.interests ?? []),
-        tempInterest.trim(),
+        interestToAdd.trim(),
       ]);
       setTempInterest("");
       form.trigger("interests");
@@ -164,7 +166,9 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
                         onChange={(e) => setTempInterest(e.target.value)}
                         placeholder="Enter an interest"
                         onKeyDown={(e) => e.key === "Enter" && addInterest()}
-                        className="border-2 border-green-200 focus:border-green-500"
+                        className={`border-2 border-green-200 focus:border-green-500 transition-all duration-200 ${
+                          tempInterest.trim() ? "ring-2 ring-purple-200" : ""
+                        }`}
                       />
                     </FormControl>
                     <FormMessage />
@@ -173,13 +177,20 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
               />
             </div>
             <Button
-              onClick={addInterest}
+              onClick={() => addInterest()}
               variant="outline"
               className="border-green-300 text-green-700 hover:bg-white"
             >
               Add ✨
             </Button>
           </div>
+
+          <InterestSuggestions
+            addInterest={addInterest}
+            interests={formData.interests ?? []}
+            tempInterest={tempInterest}
+          />
+
           <div className="flex flex-wrap gap-2">
             {formData.interests?.map((interest, index) => (
               <Badge
