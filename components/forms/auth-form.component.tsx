@@ -25,6 +25,7 @@ import {
 import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 import { useRegister } from "@/services/auth/register.service";
 import { useLogin } from "@/services/auth/sign-in.service";
+import { FormError } from "../error/form-error";
 
 const authSchema = z.object({
   email: z
@@ -59,8 +60,16 @@ export const AuthForm = () => {
     },
   });
 
-  const { mutate: loginUser, isPending: isLoggingIn } = useLogin();
-  const { mutate: registerUser, isPending: isRegistering } = useRegister();
+  const {
+    mutate: loginUser,
+    isPending: isLoggingIn,
+    error: loginError,
+  } = useLogin();
+  const {
+    mutate: registerUser,
+    isPending: isRegistering,
+    error: registerError,
+  } = useRegister();
 
   const onSubmit = async (data: AuthFormData) => {
     if (mode === "login") {
@@ -194,6 +203,29 @@ export const AuthForm = () => {
               </button>
             </p>
           </div>
+
+          {(loginError || registerError) && (
+            <div className="mt-4">
+              {loginError && mode === "login" && (
+                <FormError
+                  errorMessage={
+                    loginError.message === "Invalid login credentials"
+                      ? "Invalid email or password"
+                      : "Something went wrong with your login. Please try again."
+                  }
+                />
+              )}
+              {registerError && mode === "register" && (
+                <FormError
+                  errorMessage={
+                    registerError.message === "User already registered"
+                      ? "User already exists"
+                      : "Something went wrong with your registration. Please try again."
+                  }
+                />
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

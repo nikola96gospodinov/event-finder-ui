@@ -15,7 +15,7 @@ function AuthPageContent() {
 
   useEffect(() => {
     if (user && !isFetchingUser) {
-      replace("/profile");
+      replace("/run");
     }
   }, [user, isFetchingUser, replace]);
 
