@@ -26,6 +26,7 @@ import { Sparkles, Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react";
 import { useRegister } from "@/services/auth/register.service";
 import { useLogin } from "@/services/auth/sign-in.service";
 import { FormError } from "../error/form-error";
+import clsx from "clsx";
 
 const authSchema = z.object({
   email: z
@@ -96,16 +97,61 @@ export const AuthForm = () => {
 
   const isLoading = form.formState.isSubmitting || isLoggingIn || isRegistering;
 
+  const baseButtonStyle =
+    "font-bold w-full rounded-4xl p-2 relative overflow-hidden";
+  const inactiveButtonStyle = "text-white";
+
   return (
     <div className="max-w-xl mx-auto p-2 md:p-16">
       <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
-          <CardTitle className="text-3xl font-bold flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center border border-white border-2 mb-8 rounded-4xl relative overflow-hidden">
+            <div
+              className={clsx(
+                "absolute top-0 left-0 w-1/2 h-full bg-white rounded-4xl transition-transform duration-300 ease-in-out",
+                mode === "register" && "translate-x-full"
+              )}
+            />
+
+            <button
+              onClick={() => {
+                if (mode === "register") {
+                  toggleMode();
+                }
+              }}
+              className={clsx(
+                baseButtonStyle,
+                {
+                  [inactiveButtonStyle]: mode === "register",
+                },
+                "z-10 text-purple-600"
+              )}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => {
+                if (mode === "login") {
+                  toggleMode();
+                }
+              }}
+              className={clsx(
+                baseButtonStyle,
+                {
+                  [inactiveButtonStyle]: mode === "login",
+                },
+                "z-10 text-pink-600"
+              )}
+            >
+              Register
+            </button>
+          </div>
+          <CardTitle className="text-2xl font-bold flex items-center justify-center gap-3">
             <Sparkles className="h-6 w-6" />
             {mode === "login" ? "Welcome Back" : "Join Us"}
             <Sparkles className="h-6 w-6" />
           </CardTitle>
-          <CardDescription className="text-purple-100 text-base">
+          <CardDescription className="text-purple-50 text-sm">
             {mode === "login"
               ? "Sign in to your account to continue"
               : "Create your account to get started"}
