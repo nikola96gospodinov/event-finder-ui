@@ -28,10 +28,9 @@ type AvailabilityStepProps = {
 const dayLabels = ["weekdays", "weekends"] as const;
 
 const timeCommitmentOptions = [
-  { value: "120", label: "Up to 2 hours" },
-  { value: "240", label: "Up to 4 hours" },
-  { value: "360", label: "Up to 6 hours" },
-  { value: "480", label: "More than 6 hours" },
+  { value: "240", label: "Up to a few hours" },
+  { value: "360", label: "Up to half a day" },
+  { value: "720", label: "Up to a day" },
 ];
 
 export const AvailabilityStep = ({ form }: AvailabilityStepProps) => {
