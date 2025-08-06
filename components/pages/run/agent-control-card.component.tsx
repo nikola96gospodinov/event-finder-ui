@@ -30,7 +30,10 @@ const SuccessState = () => (
     </p>
     <div className="flex items-center justify-center gap-3 text-purple-600 bg-purple-50 rounded-lg p-6 border border-purple-200">
       <Clock3 className="h-6 w-6" />
-      <span>It might take up to a few hours for the results to be ready.</span>
+      <span>
+        It might take up to a few hours for the results to be ready. Make sure
+        you check your spam folder.
+      </span>
     </div>
   </div>
 );
