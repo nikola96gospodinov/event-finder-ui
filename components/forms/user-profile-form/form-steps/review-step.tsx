@@ -221,6 +221,15 @@ export const ReviewStep = ({ form }: ReviewStepProps) => {
               ))}
             </div>
           </div>
+
+          {formData.extra_info && (
+            <div>
+              <p className="font-semibold text-rose-600 mb-2">
+                💬 Extra Information:
+              </p>
+              <p className="text-gray-700 text-sm">{formData.extra_info}</p>
+            </div>
+          )}
         </div>
       </div>
 

@@ -41,6 +41,7 @@ const saveProfile = async (profile: UserProfile) => {
         ? null
         : profile.acceptable_times.weekends.endTime,
       time_commitment_in_minutes: profile.time_commitment_in_minutes,
+      extra_info: profile.extra_info,
     },
     {
       onConflict: "user_id",

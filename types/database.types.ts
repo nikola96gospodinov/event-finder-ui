@@ -21,6 +21,7 @@ export type Database = {
           created_at: string
           distance_threshold_unit: Database["public"]["Enums"]["threshold_unit"]
           distance_threshold_value: number
+          extra_info: string | null
           gender: Database["public"]["Enums"]["gender"]
           goals: string[]
           id: string
@@ -43,6 +44,7 @@ export type Database = {
           created_at?: string
           distance_threshold_unit: Database["public"]["Enums"]["threshold_unit"]
           distance_threshold_value: number
+          extra_info?: string | null
           gender: Database["public"]["Enums"]["gender"]
           goals: string[]
           id?: string
@@ -65,6 +67,7 @@ export type Database = {
           created_at?: string
           distance_threshold_unit?: Database["public"]["Enums"]["threshold_unit"]
           distance_threshold_value?: number
+          extra_info?: string | null
           gender?: Database["public"]["Enums"]["gender"]
           goals?: string[]
           id?: string
@@ -101,6 +104,39 @@ export type Database = {
         }
         Relationships: []
       }
+      subscriptions: {
+        Row: {
+          cancellation_reason: string | null
+          cancelled_at: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          subscription_type: Database["public"]["Enums"]["subscription_type"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          id?: string
+          is_active: boolean
+          subscription_type: Database["public"]["Enums"]["subscription_type"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          subscription_type?: Database["public"]["Enums"]["subscription_type"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -125,6 +161,7 @@ export type Database = {
         | "bisexual"
         | "pansexual"
         | "other"
+      subscription_type: "premium" | "unlimited"
       threshold_unit: "miles" | "km"
     }
     CompositeTypes: {
@@ -271,6 +308,7 @@ export const Constants = {
         "pansexual",
         "other",
       ],
+      subscription_type: ["premium", "unlimited"],
       threshold_unit: ["miles", "km"],
     },
   },

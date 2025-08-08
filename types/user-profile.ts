@@ -46,6 +46,11 @@ export const InterestsGoalsSchema = z.object({
       errorMap: () => ({ message: "Please enter at least one goal" }),
     })
     .min(1, "Please enter at least one goal"),
+  extra_info: z
+    .string()
+    .max(500, "You can't write more than 500 characters")
+    .optional()
+    .nullable(),
 });
 export type InterestsGoals = z.infer<typeof InterestsGoalsSchema>;
 

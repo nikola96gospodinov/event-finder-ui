@@ -118,6 +118,7 @@ const FormContent = ({
       relationship_status: profile?.relationship_status,
       goals: profile?.goals,
       interests: profile?.interests,
+      extra_info: profile?.extra_info,
       postcode: profile?.postcode,
       distance_threshold: {
         value: profile?.distance_threshold_value,

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { ExplanationTooltip } from "@/components/reusables/explanation-tooltip";
 import { InterestSuggestions } from "./interest-suggestions.component";
+import { Textarea } from "@/components/ui/textarea";
 
 type InterestsGoalsStepProps = {
   form: UseFormReturn<UserProfile>;
@@ -203,6 +204,35 @@ export const InterestsGoalsStep = ({ form }: InterestsGoalsStepProps) => {
               </Badge>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 md:p-6 rounded-xl border border-purple-200">
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold text-purple-700 mb-1">
+            💬 Extra Information (Optional)
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            E.g. religion, political beliefs, ethnicity, personality traits,
+            etc.
+          </p>
+
+          <FormField
+            control={form.control}
+            name="extra_info"
+            render={({ field }) => (
+              <FormItem className="mt-4">
+                <FormControl>
+                  <Textarea
+                    placeholder="What else is important to you?"
+                    className="border-2 border-purple-200 focus:border-purple-500"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </div>
       </div>
     </div>
