@@ -21,6 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Database } from "@/types/database.types";
+import { getCurrentAge } from "@/utils/dates.utils";
 
 interface SummaryCardProps {
   profile: Database["public"]["Tables"]["profiles"]["Row"];
@@ -83,9 +84,7 @@ export const SummaryCard = ({ profile, runs }: SummaryCardProps) => {
             <div className="flex items-center gap-3 text-sm text-purple-800">
               <Cake className="h-4 w-4 text-purple-600" />
               <span className="font-medium font-bold">
-                {new Date().getFullYear() -
-                  new Date(profile.birthday).getFullYear()}{" "}
-                years old
+                {getCurrentAge(profile.birthday)} years old
               </span>
               <span></span>
             </div>

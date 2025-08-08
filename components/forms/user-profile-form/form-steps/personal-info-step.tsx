@@ -60,7 +60,7 @@ type PersonalInfoStepProps = {
 export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
   const [currentMonth, setCurrentMonth] = React.useState<Date | undefined>(
     form.getValues("birthday")
-      ? new Date(form.getValues("birthday"))
+      ? new Date(form.getValues("birthday") + "T00:00:00")
       : new Date()
   );
 
@@ -98,7 +98,10 @@ export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
                       className="w-full justify-between font-normal border-2 border-pink-200 focus:border-pink-500 transition-all duration-300 hover:border-pink-300 text-foreground"
                     >
                       {field.value
-                        ? new Date(field.value).toLocaleDateString()
+                        ? (() => {
+                            const date = new Date(field.value + "T00:00:00");
+                            return date.toLocaleDateString();
+                          })()
                         : "Select date"}
                       <ChevronDownIcon className="h-4 w-4 opacity-50" />
                     </Button>
@@ -110,13 +113,27 @@ export const PersonalInfoStep = ({ form }: PersonalInfoStepProps) => {
                 >
                   <Calendar
                     mode="single"
-                    selected={field.value ? new Date(field.value) : undefined}
+                    selected={
+                      field.value
+                        ? new Date(field.value + "T00:00:00")
+                        : undefined
+                    }
                     captionLayout="dropdown"
                     month={currentMonth}
                     onSelect={(date) => {
-                      field.onChange(date ? date.toISOString() : "");
                       if (date) {
+                        // Format date as YYYY-MM-DD to preserve the local date without timezone issues
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(
+                          2,
+                          "0"
+                        );
+                        const day = String(date.getDate()).padStart(2, "0");
+                        const dateString = `${year}-${month}-${day}`;
+                        field.onChange(dateString);
                         setCurrentMonth(date);
+                      } else {
+                        field.onChange("");
                       }
                     }}
                     onMonthChange={setCurrentMonth}

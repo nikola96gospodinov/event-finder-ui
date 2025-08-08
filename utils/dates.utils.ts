@@ -5,6 +5,11 @@ export const getStartOfMonth = () => {
 
 export const getCurrentAge = (birthday: Date | string) => {
   const now = new Date();
-  const age = now.getFullYear() - new Date(birthday).getFullYear();
+  // Handle both ISO string format and YYYY-MM-DD format
+  const birthdayDate =
+    typeof birthday === "string" && birthday.includes("T")
+      ? new Date(birthday)
+      : new Date(birthday + "T00:00:00");
+  const age = now.getFullYear() - birthdayDate.getFullYear();
   return age;
 };
