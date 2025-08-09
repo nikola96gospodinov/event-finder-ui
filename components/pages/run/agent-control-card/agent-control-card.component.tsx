@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,14 +13,28 @@ import { Database } from "@/types/database.types";
 import { SuccessState } from "./success-state.component";
 import { OutOfRunsState } from "./out-of-runs.component";
 import { MainFormState } from "./main-form-state/main-form-state.component";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AgentControlCardProps {
   runs: Database["public"]["Tables"]["runs"]["Row"][];
 }
 
+const runFormSchema = z.object({
+  onlyHighlyRelevant: z.boolean(),
+});
+
+export type RunFormData = z.infer<typeof runFormSchema>;
+
 export const AgentControlCard = ({ runs }: AgentControlCardProps) => {
-  const [onlyHighlyRelevant, setOnlyHighlyRelevant] = useState(true);
   const { mutate: runAgent, isPending: isRunning, isSuccess } = useRunAgent();
+  const form = useForm<RunFormData>({
+    resolver: zodResolver(runFormSchema),
+    defaultValues: {
+      onlyHighlyRelevant: true,
+    },
+  });
 
   const runsUsed = runs.length;
   const maxRuns = 2;
@@ -29,7 +42,7 @@ export const AgentControlCard = ({ runs }: AgentControlCardProps) => {
   const isOutOfRuns = runsLeft <= 0;
 
   const handleRunAgent = () => {
-    runAgent({ onlyHighlyRelevant });
+    runAgent({ onlyHighlyRelevant: form.getValues("onlyHighlyRelevant") });
   };
 
   const renderContent = () => {
@@ -43,8 +56,7 @@ export const AgentControlCard = ({ runs }: AgentControlCardProps) => {
 
     return (
       <MainFormState
-        onlyHighlyRelevant={onlyHighlyRelevant}
-        setOnlyHighlyRelevant={setOnlyHighlyRelevant}
+        form={form}
         isRunning={isRunning}
         onRunAgent={handleRunAgent}
       />
