@@ -23,6 +23,7 @@ interface AgentControlCardProps {
 
 const runFormSchema = z.object({
   onlyHighlyRelevant: z.boolean(),
+  customLocation: z.string().optional(),
 });
 
 export type RunFormData = z.infer<typeof runFormSchema>;
@@ -33,6 +34,7 @@ export const AgentControlCard = ({ runs }: AgentControlCardProps) => {
     resolver: zodResolver(runFormSchema),
     defaultValues: {
       onlyHighlyRelevant: true,
+      customLocation: undefined,
     },
   });
 
@@ -42,7 +44,10 @@ export const AgentControlCard = ({ runs }: AgentControlCardProps) => {
   const isOutOfRuns = runsLeft <= 0;
 
   const handleRunAgent = () => {
-    runAgent({ onlyHighlyRelevant: form.getValues("onlyHighlyRelevant") });
+    runAgent({
+      onlyHighlyRelevant: form.watch("onlyHighlyRelevant"),
+      customLocation: form.watch("customLocation"),
+    });
   };
 
   const renderContent = () => {

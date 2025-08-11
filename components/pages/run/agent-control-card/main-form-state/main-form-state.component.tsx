@@ -10,9 +10,9 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormDescription,
 } from "@/components/ui/form";
 import { RunFormData } from "../agent-control-card.component";
+import { CustomLocation } from "./custom-location.component";
 
 export const MainFormState = ({
   form,
@@ -28,11 +28,13 @@ export const MainFormState = ({
   return (
     <Form {...form}>
       <div className="space-y-4">
+        <CustomLocation form={form} />
+
         <FormField
           control={form.control}
           name="onlyHighlyRelevant"
           render={({ field }) => (
-            <FormItem className="flex flex-col space-y-1">
+            <FormItem className="flex flex-col space-y-1 mt-6">
               <div className="flex items-center space-x-3">
                 <FormControl>
                   <Checkbox
@@ -43,10 +45,6 @@ export const MainFormState = ({
                 </FormControl>
                 <FormLabel>Only include highly relevant events</FormLabel>
               </div>
-              <FormDescription>
-                When enabled, the agent will be more selective and only return
-                events that closely match your interests and preferences.
-              </FormDescription>
             </FormItem>
           )}
         />

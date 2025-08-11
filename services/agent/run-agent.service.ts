@@ -3,9 +3,10 @@ import { supabase } from "@/lib/supabase";
 
 type Props = {
   onlyHighlyRelevant: boolean;
+  customLocation?: string;
 };
 
-const runAgent = async ({ onlyHighlyRelevant }: Props) => {
+const runAgent = async ({ onlyHighlyRelevant, customLocation }: Props) => {
   const {
     data: { session },
     error,
@@ -19,6 +20,8 @@ const runAgent = async ({ onlyHighlyRelevant }: Props) => {
     throw new Error("No authentication token available");
   }
 
+  console.log("customLocation", customLocation);
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_AGENT_API_URL}/api/v1/external/run-agent?only_highly_relevant=${onlyHighlyRelevant}`,
     {
@@ -27,6 +30,9 @@ const runAgent = async ({ onlyHighlyRelevant }: Props) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.access_token}`,
       },
+      body: customLocation
+        ? JSON.stringify({ custom_location: customLocation })
+        : undefined,
     }
   );
 
